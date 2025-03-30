@@ -13,7 +13,7 @@ errfilanc=1 # number of allowed error for anchored CUT site filtering
 thr=6 # number of processor threads to use
 lenada=130 # minimum length for adapter removal
 lenfil=100 # minimum length for filtering cut sites
-reads="/mnt/qnap/projects/RADseq/MPabijan_RAD/X204SC24124326-Z01-F001/01.RawData/P1/P1_MKDL240011297-1A_22LMFJLT4_L2_" # template for reads 
+reads="/path/to/directory/reads_files_template" # template for reads 
 readsP5="$reads""1.fq.gz" # reads from P5 primer - forward
 readsP7="$reads""2.fq.gz" # reads from P7 primer - reverse
 
