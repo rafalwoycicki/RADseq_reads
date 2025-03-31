@@ -23,7 +23,7 @@ lenada=130 # minimum length for adapter removal
 lenfil=100 # minimum length for filtering cut sites
 
 # ***
-reads="/mnt/qnap/projects/RADseq/MPabijan_RAD/X204SC23021387-Z01-F001/01.RawData/MP/MP_EKDL230001910-1A_HNW37DSX5_L2_" # path to template for reads 
+reads="/path/to/template/reads/file" # path to template for reads 
 # ***
 
 readsP5="$reads""1.fq.gz" # reads from P5 primer - forward
