@@ -1,17 +1,18 @@
 #!/bin/bash
 
-#READ BELOW FIRST:
-
-### !!! need to run script using: source <<file name>>
-
-### !!! need to input proper PATH TO READS TEMPLATE "$reads"
-### !!! need to input proper BARCODES file name "$barcodes"
-
-conda activate cutadapt
-
 # pipeline for trimming and demultiplexing illumina reads after RADseq
 # using cutadapt 5.0
 
+#READ BELOW FIRST:
+
+### !!! need to run script using: source <<file name>>
+### !!! need to input proper PATH TO READS TEMPLATE "$reads"
+### !!! need to input proper BARCODES file name "$barcodes"
+
+# ***
+reads="/path/to/template/reads/file" # path to template for reads 
+barcodes="old_barcodes_cutadapt.txt" # fasta file with barcodes
+# ***
 
 qualada="20,20" # quality trimming adapters
 qualfil="20,20" # quality trimming filtering
@@ -21,19 +22,12 @@ errfilanc=1 # number of allowed error for anchored CUT site filtering
 thr=6 # number of processor threads to use
 lenada=130 # minimum length for adapter removal
 lenfil=100 # minimum length for filtering cut sites
-
-# ***
-reads="/path/to/template/reads/file" # path to template for reads 
-# ***
-
 readsP5="$reads""1.fq.gz" # reads from P5 primer - forward
 readsP7="$reads""2.fq.gz" # reads from P7 primer - reverse
 
-# ***
-barcodes="old_barcodes_cutadapt.txt" # fasta file with barcodes
-# ***
-
 echo "$qualada $qualfil $errbar $errfil $errfilanc $thr $lenada $lenfil $reads $readsP5 $readsP7 $barcodes"
+
+conda activate cutadapt
 
 cat $barcodes | grep '>' | sed 's/>//' > barcodes.list
 
@@ -93,7 +87,4 @@ done
 cat Start.counts Adapters.counts Barcodes.*.counts Filtered.*.counts Rescued.*.counts | sed 's/ /\t/g'  > Counts.stat
 
 rm *.count
-
 rm first.column
-
-
