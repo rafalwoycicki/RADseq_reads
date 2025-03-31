@@ -1,7 +1,7 @@
 # RADseq_reads
 pipeline for reads preprocessing from RADseq experiments done similar to one described in Schweyen et al. 2014 - but can be freely modified for diferenbt versions.
 pipeline inspired by process_radtags pipeline from STACKS, outputing read files to be used by next STACKS steps.
-pipeline uses cutadapt 5.0
+pipeline uses cutadapt 5.0 (https://doi.org/10.14806/ej.17.1.200).
 when using specific conda envinorment like here for cutadapt 5.0 pipeline needs to be run: source <<file name>> to enable loading this specific envinorment. When not using CONDA you can comment the line with
 conda activate cutadapt
 
