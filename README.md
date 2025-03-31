@@ -17,7 +17,7 @@ You need to input proper BARCODES file name at "$barcodes" variable
 
 Default variables to be modifies by user prior to running the script:
 # ***
-reads="/mnt/qnap/projects/RADseq/MPabijan_RAD/X204SC23021387-Z01-F001/01.RawData/MP/MP_EKDL230001910-1A_HNW37DSX5_L2_" # template for reads
+reads="/mnt/qnap/projects/RADseq/filenametemplate" # template for reads
 barcodes="old_barcodes_cutadapt.txt" # fasta file with barcodes
 # ***
 qualada="20,20" # quality trimming adapters
