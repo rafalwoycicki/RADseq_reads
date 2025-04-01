@@ -1,7 +1,7 @@
 <a href="https://doi.org/10.5281/zenodo.15111568"><img src="https://zenodo.org/badge/957550864.svg" alt="DOI"></a>
 
-# RADseq_reads
-pipeline for reads preprocessing from RADseq experiments done similar to one described in Schweyen et al. 2014 - but can be freely modified for diferenbt versions.
+# ddRADseq_reads
+pipeline for reads preprocessing from ddRADseq experiments done similar to one described in Schweyen et al. 2014 - but can be freely modified for diferenbt versions.
 
 pipeline inspired by process_radtags pipeline from STACKS, outputing read files to be used by next STACKS steps.
 
