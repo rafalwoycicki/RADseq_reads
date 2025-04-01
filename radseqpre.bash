@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# pipeline for trimming and demultiplexing illumina reads after RADseq
+# pipeline for trimming and demultiplexing illumina reads after ddRADseq
 # using cutadapt 5.0 # need to install cutadapt 5.0!
 
 #READ BELOW FIRST:
