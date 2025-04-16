@@ -9,7 +9,7 @@ when using specific conda envinorment like in my environment for cutadapt 5.0 pi
 conda activate cutadapt
 
 ## ddradseq_pre.bash
-pipeline inspired by process_radtags script from the STACKS pipeline (https://catchenlab.life.illinois.edu/stacks/), outputing quality filtered, demultiplexed and cut site filtered paired and unpaired reads to be used by next STACKS steps.
+pipeline inspired by process_radtags script (https://catchenlab.life.illinois.edu/stacks/comp/process_radtags.php) from the STACKS pipeline (https://catchenlab.life.illinois.edu/stacks/), outputing quality filtered, demultiplexed and cut site filtered paired and unpaired reads to be used by next STACKS steps.
 
 There are several variables to be set before running the script (will me soon modified to be set in command line.
 
@@ -87,6 +87,7 @@ Output file schema: Rescued.?.{barcode}.fq.gz
 #### Statistics.
 The script outputs the statistics in the form of the number of the reads left for the analysis from each step in a file named "Counts.stat"
 
+## ddradseq_dedup.bash
 
 
 
