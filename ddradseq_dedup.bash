@@ -70,7 +70,7 @@ paste first.column Short.Rescued.2."$barcode".p7dedupl.count > ResDedup.2."$barc
 
 done
 
-cat Start.counts Adapters.counts Barcodes.*.counts Filtered.*.counts Rescued.*.counts FilDedup.*.counts ResDedup.*.counts | sed 's/ /\t/g'  > Counts_dedupl.stat
+cat FilDedup.*.counts ResDedup.*.counts | sed 's/ /\t/g'  > Counts_dedupl.stat
 
 rm *.count
 
