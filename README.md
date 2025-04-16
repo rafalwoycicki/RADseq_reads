@@ -97,7 +97,8 @@ Algorithm:
 #### 3rd: As in practice the paired P7 reads of the P5 read are not all unique (DBR_P7read), this step filters the p7 reads to be the same as p5 reads and to be unique.
 #### 4th: shortening all the reads to the final $len length as required by ustacks (https://catchenlab.life.illinois.edu/stacks/comp/ustacks.php )part of STACKS package. 
 
-
+### Statistics.
+The script outputs the statistics in the form of the number of the reads left for the analysis from each step in a file named "Counts_dedupl.stat"
 
 
 
