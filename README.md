@@ -51,8 +51,12 @@ At this moment pipeline runs in 4 sections:
 # 1. removing sequencing adapters:
 uses adaptor sequences for both reads from both sites: 5' "TACACGACGCTCTTCCGATCT" and 3' "AGATCGGAAGAGCACACGTCT" for P5 reads as well as 5' "AGACGTGTGCTCTTCCGATCT" and 3' "AGATCGGAAGAGCGTCGTGTA" for P7 reads. The adaptor sequences are not required but when found are trimmed away. Uses as input paired reads.
 
+Output file schema: Adapters.?.fq.gz
+
 # 2. demultiplexing:
 uses barcode sequences anchored/required at the beginning of the 5' site of P5 read. Found barcodes are trimmed away. This step outputs paired reads sorted by the barcode found as well as untrimmed reads where barcode was not found. Uses as input the output of step 1.
+
+Output file schema: Barcodes.?.{barcode}.fq.gz
 
 # 3. filteringcutsites:
 uses specific cut site sequences with DBR region. At this moment these are: 
@@ -66,6 +70,8 @@ Untrimmed reads are also placed in separate output files.
 
 The cut sites and DBR regions are left intact and not trimmed away.
 
+Output file schema: Filtered.?.{barcode}.fq.gz ( and Filtered.?.{barcode}.untrimmed.fq.gz )
+
 # 4. rescuing untrimmed reads:
 this step tries to rescue P5 and P7 reads which in the previous step were in the output of untrimmed reads.
 
@@ -74,6 +80,8 @@ The script rescues P5 reads which does not have paired correct P7 read (therefor
 The script rescues P7 reads which does not have paired correct P5 read (therefore untrimmed by the previous step), but contain anchiored at the 5' of P7 read MSE1 cut site with DBR region "^NNNNNNNNGCTAA".
 
 The cut sites and DBR regions are left intact and not trimmed away.
+
+Output file schema: Rescued.?.{barcode}.fq.gz
 
 # Statistics.
 The script outputs the statistics in the form of the number of the reads left for the analysis from each step in a file named "Counts.stat"
