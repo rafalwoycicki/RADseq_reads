@@ -64,14 +64,19 @@ For P7 reads: from the 5' site this is anchored/required at the beginning MSE1 s
 The output of this step consists of paired end reads where both the anchored 5' cut site was found in reads P5 and anchored 5' cut site with DBR region was found in read P7.
 Untrimmed reads are also placed in separate output files.
 
+The cut sites and DBR regions are left intact and not trimmed away.
+
 # 4. rescuing untrimmed reads:
+this step tries to rescue P5 and P7 reads which in the previous step were in the output of untrimmed reads.
 
+The script rescues P5 reads which does not have paired correct P7 read (therefore untrimmed by the previous step), but contain anchiored at the 5' of P5 read SBF1 cut site "^TGCAGG".
 
+The script rescues P7 reads which does not have paired correct P5 read (therefore untrimmed by the previous step), but contain anchiored at the 5' of P7 read MSE1 cut site with DBR region "^NNNNNNNNGCTAA".
 
+The cut sites and DBR regions are left intact and not trimmed away.
 
-
-
-
+# Statistics.
+The script outputs the statistics 
 
 
 
