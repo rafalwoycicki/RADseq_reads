@@ -12,6 +12,7 @@ conda activate cutadapt
 
 There are several variables to be set before running the script (will me soon modified to be set in command line.
 
+
 iftest="-0" # "1" for testing one barcode, "-0" for normal analysis of whole dataset
 
 qualada="20,20" # quality trimming adapters
@@ -37,6 +38,7 @@ readsP7="2.fq.gz" # reads from P7 primer - reverse
 barcodes="barcodes_P1_cutadapt.txt" # fasta file with barcodes
 
 directory="/mnt/qnap/projects/RafalWoycicki/" # directory to save BIG data files, "" - if localy
+
 
 Remember:
 
