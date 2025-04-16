@@ -4,9 +4,9 @@ conda activate cutadapt
 
 iftest="-0" # 1 if test "-0" if not test
 directory="/mnt/qnap/projects/RafalWoycicki/" # "" - if localy
-p5len=130 #length of p5 read without cut site of p5 adapter
-p7len=140 #length of p7 read without cut site of p7 adapter but with DBR site 
-len=130
+p5len=130 #length of p5 read with SBF1 cut site beginning with ^TGCA
+p7len=140 #length of p7 read with MSE1 cut site and DBR.
+len=130 # lengthof the final reads
 
 cat barcodes.list | head -n "$iftest" | while read barcode; do # normal lociation of start of the loop
 
