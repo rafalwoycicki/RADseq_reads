@@ -81,13 +81,21 @@ pipeline inspired by clone filter script (https://catchenlab.life.illinois.edu/s
 
 There are several variables to be set before running the script (will me soon modified to be set in command line.
 
-#### iftest="-0" # 1 if test "-0" if not test
+#### iftest="-0" # "1" if test "-0" if not test
 #### directory="/mnt/qnap/projects/RafalWoycicki/" # "" - if localy
 #### p5len=130 #length of p5 read with SBF1 cut site beginning with ^TGCA
 #### p7len=140 #length of p7 read with MSE1 cut site and DBR.
 #### len=130 # lengthof the final reads
 #### thr=40 # nymber of processor therds to use for cutadapt
 #### err=0 # numner of mismatches allowed adapter sequence for cutadapt
+
+This script takes as input the paired sequences after the cut sites filtering step of the ddradseq_pre.bash script in the form of "Filtered.?.{barcode}.fq.gz" files.
+
+Algorithm:
+#### 1st: first only the P5 reads of the $p5len and P7 reads of the $p7len are considered and both the reads are trimmed to these lengths respectively
+#### 2nd: the DBR sequence of the p7 reads is combined with the p5 read sequence and this combined sequences of P5 reads: DBR_P5read are sorted and only the unique sequences are left after comparison (one sequence from the multiplicated sequences is taken randomly). The unique genome sequnces are the ones existing only once with the specific DBR. So the additional "reads" being combination of DBR and P5read are considered PCR duplicates and not purged.
+#### 3rd: As in practice the paired P7 reads of the P5 read are not all unique (DBR_P7read), this step filters the p7 reads to be the same as p5 reads and to be unique.
+#### 4th: shortening all the reads to the final $len length as required by ustacks (https://catchenlab.life.illinois.edu/stacks/comp/ustacks.php )part of STACKS package. 
 
 
 
