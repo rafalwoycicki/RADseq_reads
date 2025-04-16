@@ -3,12 +3,12 @@
 # ddRADseq_reads
 pipeline for reads preprocessing from ddRADseq experiments done similar to one described in Schweyen et al. 2014 (DOI: 10.1086/BBLv227n2p146) - but can be freely modified for different needs.
 
-pipeline inspired by process_radtags script from the STACKS pipeline (https://catchenlab.life.illinois.edu/stacks/), outputing quality filtered, demultiplexed and cut site filtered paired and unpaired reads to be used by next STACKS steps.
-
 pipeline uses cutadapt 5.0 (https://doi.org/10.14806/ej.17.1.200).
 
 when using specific conda envinorment like in my environment for cutadapt 5.0 pipeline, one needs to run the script by: source <<file name>> to enable loading this specific envinorment. When not using CONDA you can comment out the line with:
 conda activate cutadapt
+
+## ddradseq_pre.bash - pipeline inspired by process_radtags script from the STACKS pipeline (https://catchenlab.life.illinois.edu/stacks/), outputing quality filtered, demultiplexed and cut site filtered paired and unpaired reads to be used by next STACKS steps.
 
 There are several variables to be set before running the script (will me soon modified to be set in command line.
 
