@@ -13,31 +13,31 @@ pipeline inspired by process_radtags script (https://catchenlab.life.illinois.ed
 
 There are several variables to be set before running the script (will me soon modified to be set in command line.
 
-### iftest="-0" # "1" for testing one barcode, "-0" for normal analysis of whole dataset
+#### iftest="-0" # "1" for testing one barcode, "-0" for normal analysis of whole dataset
 
-### qualada="20,20" # quality trimming adapters
+#### qualada="20,20" # quality trimming adapters
 
-### qualfil="20,20" # quality trimming filtering
+#### qualfil="20,20" # quality trimming filtering
 
-### errbar=1 # number of allowed errors for demultiplexing
+#### errbar=1 # number of allowed errors for demultiplexing
 
-### errfil=0 # number of allowed errors for CUT site filtering
+#### errfil=0 # number of allowed errors for CUT site filtering
 
-### errfilanc=0 # number of allowed error for anchored CUT site filtering
+#### errfilanc=0 # number of allowed error for anchored CUT site filtering
 
-### thr=40 # number of processor threads to use
+#### thr=40 # number of processor threads to use
 
-### lenada=140 # minimum length for adapter removal
+#### lenada=140 # minimum length for adapter removal
 
-### lenfil=140 # minimum length for filtering cut sites
+#### lenfil=140 # minimum length for filtering cut sites
 
-### readsP5="1.fq.gz" # reads from P5 primer - forward
+#### readsP5="1.fq.gz" # reads from P5 primer - forward
 
-### readsP7="2.fq.gz" # reads from P7 primer - reverse
+#### readsP7="2.fq.gz" # reads from P7 primer - reverse
 
-### barcodes="barcodes_P1_cutadapt.txt" # fasta file with barcodes
+#### barcodes="barcodes_P1_cutadapt.txt" # fasta file with barcodes
 
-### directory="/mnt/qnap/projects/RafalWoycicki/" # directory to save BIG data files, "" - if localy
+#### directory="/mnt/qnap/projects/RafalWoycicki/" # directory to save BIG data files, "" - if localy
 
 Remember:
 
@@ -49,17 +49,17 @@ You need to input proper DIRECTORY name at $directory variable
 
 At this moment pipeline runs in 4 sections:
 
-#### 1. removing sequencing adapters:
+### 1. removing sequencing adapters:
 uses adaptor sequences for both reads from both sites: 5' "TACACGACGCTCTTCCGATCT" and 3' "AGATCGGAAGAGCACACGTCT" for P5 reads as well as 5' "AGACGTGTGCTCTTCCGATCT" and 3' "AGATCGGAAGAGCGTCGTGTA" for P7 reads. The adaptor sequences are not required but when found are trimmed away. Uses as input paired reads.
 
 Output file schema: Adapters.?.fq.gz
 
-#### 2. demultiplexing:
+### 2. demultiplexing:
 uses barcode sequences anchored/required at the beginning of the 5' site of P5 read. Found barcodes are trimmed away. This step outputs paired reads sorted by the barcode found as well as untrimmed reads where barcode was not found. Uses as input the output of step 1.
 
 Output file schema: Barcodes.?.{barcode}.fq.gz
 
-#### 3. filteringcutsites:
+### 3. filteringcutsites:
 uses specific cut site sequences with DBR region. At this moment these are: 
 
 For P5 reads: from the 5' site this is anchored/required at the beginning SBF1 cut site "^TGCAGG" and at the 3' end optional MSE1 cut site with DBR region "TTAGCNNNNNNNN".
@@ -73,7 +73,7 @@ The cut sites and DBR regions are left intact and not trimmed away.
 
 Output file schema: Filtered.?.{barcode}.fq.gz ( and Filtered.?.{barcode}.untrimmed.fq.gz )
 
-#### 4. rescuing untrimmed reads:
+### 4. rescuing untrimmed reads:
 this step tries to rescue P5 and P7 reads which in the previous step were in the output of untrimmed reads.
 
 The script rescues P5 reads which does not have paired correct P7 read (therefore untrimmed by the previous step), but contain anchiored at the 5' of P5 read SBF1 cut site "^TGCAGG".
@@ -84,10 +84,23 @@ The cut sites and DBR regions are left intact and not trimmed away.
 
 Output file schema: Rescued.?.{barcode}.fq.gz
 
-#### Statistics.
+### Statistics.
 The script outputs the statistics in the form of the number of the reads left for the analysis from each step in a file named "Counts.stat"
 
 ## ddradseq_dedup.bash
+
+pipeline inspired by clone filter script (https://catchenlab.life.illinois.edu/stacks/comp/clone_filter.php) from STACKS package for deduplication of reads based on DBR region in P7 reads.
+
+There are several variables to be set before running the script (will me soon modified to be set in command line.
+
+#### iftest="-0" # 1 if test "-0" if not test
+#### directory="/mnt/qnap/projects/RafalWoycicki/" # "" - if localy
+#### p5len=130 #length of p5 read with SBF1 cut site beginning with ^TGCA
+#### p7len=140 #length of p7 read with MSE1 cut site and DBR.
+#### len=130 # lengthof the final reads
+#### thr=40 # nymber of processor therds to use for cutadapt
+#### err=0 # numner of mismatches allowed adapter sequence for cutadapt
+
 
 
 
