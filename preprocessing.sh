@@ -1,3 +1,3 @@
 #!/bin/bash
 
-source cutadapt_pipeline_final.bash && source clone_filtering_final.bash
+source ddradseq_pre.bash && source ddradseq_dedup.bash
