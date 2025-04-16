@@ -76,7 +76,9 @@ The script rescues P7 reads which does not have paired correct P5 read (therefor
 The cut sites and DBR regions are left intact and not trimmed away.
 
 # Statistics.
-The script outputs the statistics 
+The script outputs the statistics in the form of the number of the reads left for the analysis from each step in a file named "Counts.stat"
+
+
 
 
 
