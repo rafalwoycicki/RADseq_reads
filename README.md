@@ -14,29 +14,17 @@ pipeline inspired by process_radtags script (https://catchenlab.life.illinois.ed
 There are several variables to be set before running the script (will me soon modified to be set in command line.
 
 #### iftest="-0" # "1" for testing one barcode, "-0" for normal analysis of whole dataset
-
 #### qualada="20,20" # quality trimming adapters
-
 #### qualfil="20,20" # quality trimming filtering
-
 #### errbar=1 # number of allowed errors for demultiplexing
-
 #### errfil=0 # number of allowed errors for CUT site filtering
-
 #### errfilanc=0 # number of allowed error for anchored CUT site filtering
-
 #### thr=40 # number of processor threads to use
-
 #### lenada=140 # minimum length for adapter removal
-
 #### lenfil=140 # minimum length for filtering cut sites
-
 #### readsP5="1.fq.gz" # reads from P5 primer - forward
-
 #### readsP7="2.fq.gz" # reads from P7 primer - reverse
-
 #### barcodes="barcodes_P1_cutadapt.txt" # fasta file with barcodes
-
 #### directory="/mnt/qnap/projects/RafalWoycicki/" # directory to save BIG data files, "" - if localy
 
 Remember:
