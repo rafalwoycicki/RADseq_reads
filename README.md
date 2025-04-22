@@ -3,6 +3,11 @@
 # ddRADseq_reads
 pipeline for reads preprocessing from ddRADseq experiments done similar to one described in Schweyen et al. 2014 (DOI: 10.1086/BBLv227n2p146) - but can be freely modified for different needs.
 
+# The pipelines ddradseq_pre.bash and ddradseq_dedup.bash were written to help preprocessing reads from ddRADseq experiments using sequencing of double digested of genomic DNA inserted sorrounded by inline barcode on the P5 adaptor read and DBR region on the P7 adaptor read, the procedure modified from Schweyen et al.
+# The new solution gave finally up to 10x more Stacks with Coverage 2-6 times higher than when preprocessing reads with the original proposed approach with STACKS's process_radtags and clone_filter. Comparison results in ComparisonFinal.ods file and in the attached graphs.
+
+
+
 pipeline uses cutadapt 5.0 (https://doi.org/10.14806/ej.17.1.200).
 
 when using specific conda envinorment like in my environment for cutadapt 5.0 pipeline, one needs to run the script by: source <<file name>> to enable loading this specific envinorment. When not using CONDA you can comment out the line with:
