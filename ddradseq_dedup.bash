@@ -9,6 +9,7 @@ p7len=140 #length of p7 read with MSE1 cut site and DBR.
 len=130 # lengthof the final reads
 thr=40 # nymber of processor therds to use for cutadapt
 err=0 # numner of mismatches allowed adapter sequence for cutadapt
+p7_5p_seq="P7read5primDBR_MSE1=^NNNNNNNNGC" # name and sequence of the nucleotides filtered by the final reads shortening cutadapt script (for details check the cutadapt manual)
 
 cat barcodes.list | head -n "$iftest" | while read barcode; do # normal lociation of start of the loop
 
@@ -50,7 +51,7 @@ seqtk subseq "$directory"Filtered.2."$barcode".fq.gz Filtered."$barcode".p5p7ded
 echo "10"
 #shortening the reads so they are equal in length
 cutadapt -j "$thr" --length "$len" -o "$directory"Short.Filtered."$barcode".p5p7dedupl.1.fq "$directory"Filtered."$barcode".p5p7dedupl.1.fq > FilterShort.1.txt
-cutadapt -j "$thr" --length "$len" -e "$err" -g P7read5primDBR_MSE1=^NNNNNNNNGC -o "$directory"Short.Filtered."$barcode".p5p7dedupl.2.fq "$directory"Filtered."$barcode".p5p7dedupl.2.fq > FilterShort.2.txt #removing DBR with additional "GC" bases from P7 reads
+cutadapt -j "$thr" --length "$len" -e "$err" -g "$p7_5p_seq" -o "$directory"Short.Filtered."$barcode".p5p7dedupl.2.fq "$directory"Filtered."$barcode".p5p7dedupl.2.fq > FilterShort.2.txt #removing DBR with additional "GC" bases from P7 reads
 
 echo "11"
 cat "$directory"Short.Filtered."$barcode".p5p7dedupl.1.fq | wc -l | awk '{print $1/4}' > Short.Filtered."$barcode".p5p7dedupl.1.count
@@ -73,7 +74,7 @@ cat "$directory"Rescued.2."$barcode".p7sorted.table | uniq -c -f1 | sed 's/^    
 
 seqtk subseq "$directory"Rescued.2."$barcode".fq.gz Rescued.2."$barcode".p7dedupl.list > "$directory"Rescued.2."$barcode".p7dedupl.fq
 
-cutadapt -j "$thr" --length "$len" -e "$err" -g P7read5primDBR_MSE1=^NNNNNNNNGC -o "$directory"Short.Rescued.2."$barcode".p7dedupl.fq "$directory"Rescued.2."$barcode".p7dedupl.fq > ResShort.2.txt
+cutadapt -j "$thr" --length "$len" -e "$err" -g "$p7_5p_seq" -o "$directory"Short.Rescued.2."$barcode".p7dedupl.fq "$directory"Rescued.2."$barcode".p7dedupl.fq > ResShort.2.txt
 
 cat "$directory"Short.Rescued.2."$barcode".p7dedupl.fq | wc -l | awk '{print $1/4}' > Short.Rescued.2."$barcode".p7dedupl.count
 echo "$barcode"."dedupl_rescued2" > first.column
