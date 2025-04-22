@@ -50,7 +50,7 @@ seqtk subseq "$directory"Filtered.2."$barcode".fq.gz Filtered."$barcode".p5p7ded
 echo "10"
 #shortening the reads so they are equal in length
 cutadapt -j "$thr" --length "$len" -o "$directory"Short.Filtered."$barcode".p5p7dedupl.1.fq "$directory"Filtered."$barcode".p5p7dedupl.1.fq > FilterShort.1.txt
-cutadapt -j "$thr" --length "$len" -e 0 -g P7read5primDBR_MSE1=^NNNNNNNNGC -o "$directory"Short.Filtered."$barcode".p5p7dedupl.2.fq "$directory"Filtered."$barcode".p5p7dedupl.2.fq > FilterShort.2.txt #removing DBR with additional "GC" bases from P7 reads
+cutadapt -j "$thr" --length "$len" -e "$err" -g P7read5primDBR_MSE1=^NNNNNNNNGC -o "$directory"Short.Filtered."$barcode".p5p7dedupl.2.fq "$directory"Filtered."$barcode".p5p7dedupl.2.fq > FilterShort.2.txt #removing DBR with additional "GC" bases from P7 reads
 
 echo "11"
 cat "$directory"Short.Filtered."$barcode".p5p7dedupl.1.fq | wc -l | awk '{print $1/4}' > Short.Filtered."$barcode".p5p7dedupl.1.count
@@ -73,7 +73,7 @@ cat "$directory"Rescued.2."$barcode".p7sorted.table | uniq -c -f1 | sed 's/^    
 
 seqtk subseq "$directory"Rescued.2."$barcode".fq.gz Rescued.2."$barcode".p7dedupl.list > "$directory"Rescued.2."$barcode".p7dedupl.fq
 
-cutadapt -j "$thr" --length "$len" -e 0 -g P7read5primDBR_MSE1=^NNNNNNNNGC -o "$directory"Short.Rescued.2."$barcode".p7dedupl.fq "$directory"Rescued.2."$barcode".p7dedupl.fq > ResShort.2.txt
+cutadapt -j "$thr" --length "$len" -e "$err" -g P7read5primDBR_MSE1=^NNNNNNNNGC -o "$directory"Short.Rescued.2."$barcode".p7dedupl.fq "$directory"Rescued.2."$barcode".p7dedupl.fq > ResShort.2.txt
 
 cat "$directory"Short.Rescued.2."$barcode".p7dedupl.fq | wc -l | awk '{print $1/4}' > Short.Rescued.2."$barcode".p7dedupl.count
 echo "$barcode"."dedupl_rescued2" > first.column
@@ -86,4 +86,3 @@ cat Start.counts Adapters.counts Barcodes.*.counts Filtered.*.counts Rescued.*.c
 rm *.count
 
 rm first.column
-
