@@ -35,6 +35,19 @@ You need to input proper BARCODES file name at "$barcodes" variable
 
 You need to input proper DIRECTORY name at $directory variable
 
+
+#### Sequencing adapters:
+#### A_p5_5p="P5read5prim=TACACGACGCTCTTCCGATCT" # read P5 5prim sequencing adapter sequence
+#### A_p5_3p="P5read3prim=AGATCGGAAGAGCACACGTCT" # read P5 3prim sequencing adapter sequence
+#### A_p7_5p="P7read5prim=AGACGTGTGCTCTTCCGATCT" # read P7 5prim sequencing adapter sequence
+#### A_p7_3p="P7read3prim=AGATCGGAAGAGCGTCGTGTA" # read P7 3prim sequencing adapter sequence
+
+#### Cutsites adapters:
+#### C_p5_5p="P5read5primSBF1=^TGCAGG" # read P5 5prim cut site for the SBF1 RE
+#### C_p5_3p="P5read3primMSE1_DBR=TTAGCNNNNNNNN" # read P5 3prim cut site for the MSE1 RE including DBR region
+#### C_p7_5p="P7read5primDBR_MSE1=^NNNNNNNNGCTAA" # read P7 5prim cut site for the MSE1 RE including DBR region
+#### C_p7_3p="P7read3primSBF1=CCTGCA" # read P7 3 prim cut site for the SBF1 RE
+
 At this moment pipeline runs in 4 sections:
 
 ### 1. removing sequencing adapters:
