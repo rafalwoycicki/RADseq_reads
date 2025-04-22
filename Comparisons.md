@@ -2,6 +2,7 @@
 ## The new solution gave finally up to 10x more Stacks with Coverage 2-6 times higher than when preprocessing reads with the original proposed approach with STACKS's process_radtags and clone_filter. Comparison results in ComparisonFinal.ods (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/ComparisonsFinal.ods) file and in the attached graphs.
 
 Legend:
+
 |---|---|
 | cpa | after cut site filtering paired reads |
 | rnp | not paired remained reads after cut site filetring |
