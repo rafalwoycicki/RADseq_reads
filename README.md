@@ -14,7 +14,7 @@ conda activate cutadapt
 ## ddradseq_pre.bash
 pipeline inspired by process_radtags script (https://catchenlab.life.illinois.edu/stacks/comp/process_radtags.php) from the STACKS pipeline (https://catchenlab.life.illinois.edu/stacks/), outputing quality filtered, demultiplexed and cut site filtered paired and unpaired reads to be used by next STACKS steps.
 
-There are several variables to be set before running the script (will me soon modified to be set in command line.
+There are several variables to be set on command line before running the script (the --help option prints them all):
 
 #### iftest="-0" # "1" for testing one barcode, "-0" for normal analysis of whole dataset
 #### qualada="20,20" # quality trimming adapters
