@@ -1,7 +1,7 @@
 <a href="https://doi.org/10.5281/zenodo.15111568"><img src="https://zenodo.org/badge/957550864.svg" alt="DOI"></a>
 
 # ddRADseq_reads
-pipeline for reads preprocessing from ddRADseq experiments done similar to one described in Schweyen et al. 2014 (DOI: 10.1086/BBLv227n2p146) - but can be freely modified for different needs.
+The set of pipelines for reads preprocessing from ddRADseq experiments done similar to one described in Schweyen et al. 2014 (DOI: 10.1086/BBLv227n2p146) - but can be freely modified for different needs.
 
 ## The pipelines ddradseq_pre.bash and ddradseq_dedup.bash were written to help preprocessing reads from ddRADseq experiments using sequencing of double digested of genomic DNA inserted sorrounded by inline barcode on the P5 adaptor read and DBR region on the P7 adaptor read, the procedure modified from Schweyen et al.
 ### The new solution gave finally up to 10x more Stacks with Coverage 2-6 times higher than when preprocessing reads with the original proposed approach with STACKS's process_radtags and clone_filter. Comparison results in ComparisonFinal.ods (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/ComparisonsFinal.ods) file and in the Comparisons.md (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/Comparisons.md) file.
