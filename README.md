@@ -6,9 +6,47 @@ pipeline for reads preprocessing from ddRADseq experiments done similar to one d
 ## The pipelines ddradseq_pre.bash and ddradseq_dedup.bash were written to help preprocessing reads from ddRADseq experiments using sequencing of double digested of genomic DNA inserted sorrounded by inline barcode on the P5 adaptor read and DBR region on the P7 adaptor read, the procedure modified from Schweyen et al.
 ## The new solution gave finally up to 10x more Stacks with Coverage 2-6 times higher than when preprocessing reads with the original proposed approach with STACKS's process_radtags and clone_filter. Comparison results in ComparisonFinal.ods file and in the attached graphs.
 
-Old dataset 130nt All		p5_cpa	p7_cpa	p5_rnp	p7_rnp	p5_dpa	p7_dpa		Old dataset 130nt All		Stacks	Mean_cov
-process_radtags eb2 ea2	Average	1,11%	1,11%	7,86%	0,23%	0,49%	0,49%		process_radtags eb2 ea2	Average	120675,625	10,51
-ddradseq_reads eb1	Average	7,11%	7,11%	0,46%	0,22%	2,56%	2,56%		ddradseq_reads eb1	Average	131449,75	62,66
+
+
+| Old dataset 130nt All   |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
+|-------------------------|---------|--------|--------|--------|--------|--------|--------|
+| process_radtags eb2 ea2 | Average | 1,11%  | 1,11%  | 7,86%  | 0,23%  | 0,49%  | 0,49%  |
+| ddradseq_reads eb1      | Average | 7,11%  | 7,11%  | 0,46%  | 0,22%  | 2,56%  | 2,56%  |
+
+| Old dataset 130nt All   |         | Stacks     | Mean_cov |
+|-------------------------|---------|------------|----------|
+| process_radtags eb2 ea2 | Average | 120675,625 | 10,51    |
+| ddradseq_reads eb1      | Average | 131449,75  | 62,66    |
+
+
+
+| New P1 130 130nt All    |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
+|-------------------------|---------|--------|--------|--------|--------|--------|--------|
+| process_radtags eb2 ea2 | Average | 0,06%  | 0,06%  | 0,56%  | 0,10%  | 0,04%  | 0,04%  |
+| ddradseq_reads eb1      | Average | 0,44%  | 0,44%  | 0,04%  | 0,01%  | 0,33%  | 0,33%  |
+
+| New P1 130 130nt All    |         | Stacks   | Mean_cov |
+|-------------------------|---------|----------|----------|
+| process_radtags eb2 ea2 | Average | 3886,01  | 6,06     |
+| ddradseq_reads eb1      | Average | 58417,83 | 12,21    |
+
+
+
+| New P2 130 130nt All    |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
+|-------------------------|---------|--------|--------|--------|--------|--------|--------|
+| process_radtags eb2 ea2 | Average | 0,06%  | 0,06%  | 0,52%  | 0,09%  | 0,04%  | 0,04%  |
+| ddradseq_reads eb1      | Average | 0,40%  | 0,40%  | 0,05%  | 0,14%  | 0,27%  | 0,27%  |
+
+| New P2 130 130nt All    |         | Stacks   | Mean_cov |
+|-------------------------|---------|----------|----------|
+| process_radtags eb2 ea2 | Average | 6994     | 6,07     |
+| ddradseq_reads eb1      | Average | 55495,21 | 12,35    |
+
+
+
+
+
+
 
 pipeline uses cutadapt 5.0 (https://doi.org/10.14806/ej.17.1.200).
 
