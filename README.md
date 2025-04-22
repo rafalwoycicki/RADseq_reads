@@ -41,7 +41,7 @@ pipeline for reads preprocessing from ddRADseq experiments done similar to one d
 | ddradseq_reads eb1      | Average | 58417,83 | 12,21    |
 
 ![image](https://github.com/user-attachments/assets/6ffa0d82-ced1-4828-8623-61c06c59887d)
-<img src="https://github.com/user-attachments/assets/6ffa0d82-ced1-4828-8623-61c06c59887d" width="600">
+<img src="https://github.com/user-attachments/assets/6ffa0d82-ced1-4828-8623-61c06c59887d" width="500">
 
 ![image](https://github.com/user-attachments/assets/33e3c8fc-b28a-4496-8980-732a400035d6)
 
