@@ -31,7 +31,8 @@ pipeline for reads preprocessing from ddRADseq experiments done similar to one d
 | process_radtags eb2 ea2 | Average | 0,06%  | 0,06%  | 0,56%  | 0,10%  | 0,04%  | 0,04%  |
 | ddradseq_reads eb1      | Average | 0,44%  | 0,44%  | 0,04%  | 0,01%  | 0,33%  | 0,33%  |
 
-
+![image](https://github.com/user-attachments/assets/1a854d40-429f-45de-84f6-bd224324e1d4)
+![image](https://github.com/user-attachments/assets/75c08b55-aed1-46f5-9f01-22f50f90a8aa)
 
 
 | New P1 130 130nt All    |         | Stacks   | Mean_cov |
@@ -39,6 +40,8 @@ pipeline for reads preprocessing from ddRADseq experiments done similar to one d
 | process_radtags eb2 ea2 | Average | 3886,01  | 6,06     |
 | ddradseq_reads eb1      | Average | 58417,83 | 12,21    |
 
+![image](https://github.com/user-attachments/assets/6ffa0d82-ced1-4828-8623-61c06c59887d)
+![image](https://github.com/user-attachments/assets/33e3c8fc-b28a-4496-8980-732a400035d6)
 
 
 
