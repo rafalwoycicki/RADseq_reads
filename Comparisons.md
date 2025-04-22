@@ -3,16 +3,16 @@
 
 Legend:
 Legend:
-cpa - after cut site filtering paired reads
----
-rnp - not paired remained reads after cut site filetring
----
-dpa - paired reads after deduplication based on DBR region
----
-p5 - reads from p5 adaptor site (forward reads)
----
-p7 reads from p7 adaptor site (reverse reads)
-
+|cpa - after cut site filtering paired reads|
+-
+|rnp - not paired remained reads after cut site filetring|
+-
+|dpa - paired reads after deduplication based on DBR region|
+-
+|p5 - reads from p5 adaptor site (forward reads)|
+-
+|p7 reads from p7 adaptor site (reverse reads)|
+-
 
 | Old dataset 130nt All   |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
 |-------------------------|---------|--------|--------|--------|--------|--------|--------|
