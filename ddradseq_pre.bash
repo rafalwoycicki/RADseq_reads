@@ -5,18 +5,22 @@ conda activate cutadapt
 
 # pipeline for trimming and demultiplexing illumina reads after RADseq
 # using cutadapt 5.0
-iftest="-0" # 1 for testing one barcode, "-0" for not testing
+
+#if test variable
+iftest="1" # 1 for testing one barcode, "-0" for not testing
+# general variables
 qualada="20,20" # quality trimming adapters
 qualfil="20,20" # quality trimming filtering
 errbar=1 # number of allowed errors for demultiplexing
 errfil=0 # number of allowed errors for CUT site filtering
-thr=40 # number of processor threads to use
+thr=10 # number of processor threads to use
 lenada=140 # minimum length for adapter removal
 lenfil=140 # minimum length for filtering cut sites
+#crucial variables
 readsP5="1.fq.gz" # reads from P5 primer - forward
 readsP7="2.fq.gz" # reads from P7 primer - reverse
-barcodes="barcodes_P1_cutadapt.txt" # fasta file with barcodes
-directory="/mnt/qnap/projects/RafalWoycicki/" # "" - if localy
+barcodes="" # fasta file with barcodes
+directory="" # "" - if localy
 #adapters
 A_p5_5p="P5read5prim=TACACGACGCTCTTCCGATCT" # read P5 5prim sequencing adapter sequence
 A_p5_3p="P5read3prim=AGATCGGAAGAGCACACGTCT" # read P5 3prim sequencing adapter sequence
@@ -28,9 +32,99 @@ C_p5_3p="P5read3primMSE1_DBR=TTAGCNNNNNNNN" # read P5 3prim cut site for the MSE
 C_p7_5p="P7read5primDBR_MSE1=^NNNNNNNNGCTAA" # read P7 5prim cut site for the MSE1 RE including DBR region
 C_p7_3p="P7read3primSBF1=CCTGCA" # read P7 3 prim cut site for the SBF1 RE
 
-echo "variable: $iftest $qualada $qualfil $errbar $errfil $errfilanc $thr $lenada $lenfil $readsP5 $readsP7 $barcodes $directory $A_p5_5p $A_p5_3p $A_p7_5p $A_p7_3p $C_p5_5p $C_p5_3p $C_p7_5p $C_p7_3p"
+# Help message
+usage() {
+  echo "Usage: source ddradseq_pre.bash [options]"
+  echo "Options:"
+  echo "  --iftest <value>         Set test mode: 1 for testing one barcode (default), -0 for not testing"
+  echo "  --qualada <value>        Quality for adapter trimming (default: 20,20)"
+  echo "  --qualfil <value>        Quality for filtering (default: 20,20)"
+  echo "  --errbar <value>         Allowed errors demultiplexing (default: 1)"
+  echo "  --errfil <value>         Allowed errors cutsite filtering (default: 0)"
+  echo "  --thr <value>            Number of threads (default: 10)"
+  echo "  --lenada <value>         Min length after adapter removal (default: 140)"
+  echo "  --lenfil <value>         Min length after cutsite filtering (default: 140)"
+  echo "  --readsP5 <file>         Forward reads file (default: 1.fq.gz)"
+  echo "  --readsP7 <file>         Reverse reads file (default: 2.fq.gz)"
+  echo "  --barcodes <file>        Barcodes file (fasta file with barcodes) (default not set)"
+  echo "  --directory <path>       Project output directory set to blank/nothing if locally (default)"
+  echo "  --A_p5_5p <value>        P5 5' adapter sequence (default: P5read5prim=TACACGACGCTCTTCCGATCT)"
+  echo "  --A_p5_3p <value>        P5 3' adapter sequence (default: P5read3prim=AGATCGGAAGAGCACACGTCT)"
+  echo "  --A_p7_5p <value>        P7 5' adapter sequence (default: P7read5prim=AGACGTGTGCTCTTCCGATCT)"
+  echo "  --A_p7_3p <value>        P7 3' adapter sequence (default: P7read3prim=AGATCGGAAGAGCGTCGTGTA)"
+  echo "  --C_p5_5p <value>        P5 5' cutsite sequence (default: P5read5primSBF1=^TGCAGG)"
+  echo "  --C_p5_3p <value>        P5 3' cutsite sequence (default: P5read3primMSE1_DBR=TTAGCNNNNNNNN)"
+  echo "  --C_p7_5p <value>        P7 5' cutsite sequence (default: P7read5primDBR_MSE1=^NNNNNNNNGCTAA)"
+  echo "  --C_p7_3p <value>        P7 3' cutsite sequence (default: P7read3primSBF1=CCTGCA)"
+  echo "  --help                   Show this help message"
+}
+
+# PROTECTION: Require at least one argument
+if [ "$#" -eq 0 ]; then
+  echo "ERROR: No options provided."
+  usage
+  return 1
+fi
+
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+  key="$1"
+  case $key in
+    --iftest) iftest="$2"; shift; shift ;;
+    --qualada) qualada="$2"; shift; shift ;;
+    --qualfil) qualfil="$2"; shift; shift ;;
+    --errbar) errbar="$2"; shift; shift ;;
+    --errfil) errfil="$2"; shift; shift ;;
+    --thr) thr="$2"; shift; shift ;;
+    --lenada) lenada="$2"; shift; shift ;;
+    --lenfil) lenfil="$2"; shift; shift ;;
+    --readsP5) readsP5="$2"; shift; shift ;;
+    --readsP7) readsP7="$2"; shift; shift ;;
+    --barcodes) barcodes="$2"; shift; shift ;;
+    --directory) directory="$2"; shift; shift ;;
+    --A_p5_5p) A_p5_5p="$2"; shift; shift ;;
+    --A_p5_3p) A_p5_3p="$2"; shift; shift ;;
+    --A_p7_5p) A_p7_5p="$2"; shift; shift ;;
+    --A_p7_3p) A_p7_3p="$2"; shift; shift ;;
+    --C_p5_5p) C_p5_5p="$2"; shift; shift ;;
+    --C_p5_3p) C_p5_3p="$2"; shift; shift ;;
+    --C_p7_5p) C_p7_5p="$2"; shift; shift ;;
+    --C_p7_3p) C_p7_3p="$2"; shift; shift ;;
+    --help) usage; return 0 ;;
+    *) echo "Unknown option: $1"; usage; return 1 ;;
+  esac
+done
+
+# Print all variables for verification
+echo "Variables set:"
+echo "iftest=$iftest"
+echo "qualada=$qualada"
+echo "qualfil=$qualfil"
+echo "errbar=$errbar"
+echo "errfil=$errfil"
+echo "thr=$thr"
+echo "lenada=$lenada"
+echo "lenfil=$lenfil"
+echo "readsP5=$readsP5"
+echo "readsP7=$readsP7"
+echo "barcodes=$barcodes"
+echo "directory=$directory"
+echo "A_p5_5p=$A_p5_5p"
+echo "A_p5_3p=$A_p5_3p"
+echo "A_p7_5p=$A_p7_5p"
+echo "A_p7_3p=$A_p7_3p"
+echo "C_p5_5p=$C_p5_5p"
+echo "C_p5_3p=$C_p5_3p"
+echo "C_p7_5p=$C_p7_5p"
+echo "C_p7_3p=$C_p7_3p"
+
+# Start
+
+echo "# reading barcodes"
 
 cat $barcodes | grep '>' | sed 's/>//' > barcodes.list
+
+echo "# counting input reads"
 
 zcat $readsP5 | wc -l | awk '{print $1/4}' > Start.1.count
 zcat $readsP7 | wc -l | awk '{print $1/4}' > Start.2.count
