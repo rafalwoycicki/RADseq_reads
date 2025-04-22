@@ -13,17 +13,26 @@ pipeline for reads preprocessing from ddRADseq experiments done similar to one d
 | process_radtags eb2 ea2 | Average | 1,11%  | 1,11%  | 7,86%  | 0,23%  | 0,49%  | 0,49%  |
 | ddradseq_reads eb1      | Average | 7,11%  | 7,11%  | 0,46%  | 0,22%  | 2,56%  | 2,56%  |
 
+![image](https://github.com/user-attachments/assets/c378ddb5-baf9-48f3-b73c-34e151a4e96f)
+![image](https://github.com/user-attachments/assets/3fda75cd-02e7-4701-8fba-a45811de448e)
+
+
 | Old dataset 130nt All   |         | Stacks     | Mean_cov |
 |-------------------------|---------|------------|----------|
 | process_radtags eb2 ea2 | Average | 120675,625 | 10,51    |
 | ddradseq_reads eb1      | Average | 131449,75  | 62,66    |
 
+![image](https://github.com/user-attachments/assets/44daabc6-cb9c-4ffd-a245-0930cfe2e6c6)
+![image](https://github.com/user-attachments/assets/350d5cfe-671f-420c-add0-7e5ffa9e2486)
 
 
 | New P1 130 130nt All    |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
 |-------------------------|---------|--------|--------|--------|--------|--------|--------|
 | process_radtags eb2 ea2 | Average | 0,06%  | 0,06%  | 0,56%  | 0,10%  | 0,04%  | 0,04%  |
 | ddradseq_reads eb1      | Average | 0,44%  | 0,44%  | 0,04%  | 0,01%  | 0,33%  | 0,33%  |
+
+
+
 
 | New P1 130 130nt All    |         | Stacks   | Mean_cov |
 |-------------------------|---------|----------|----------|
@@ -32,15 +41,20 @@ pipeline for reads preprocessing from ddRADseq experiments done similar to one d
 
 
 
+
 | New P2 130 130nt All    |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
 |-------------------------|---------|--------|--------|--------|--------|--------|--------|
 | process_radtags eb2 ea2 | Average | 0,06%  | 0,06%  | 0,52%  | 0,09%  | 0,04%  | 0,04%  |
 | ddradseq_reads eb1      | Average | 0,40%  | 0,40%  | 0,05%  | 0,14%  | 0,27%  | 0,27%  |
 
+
+
+
 | New P2 130 130nt All    |         | Stacks   | Mean_cov |
 |-------------------------|---------|----------|----------|
 | process_radtags eb2 ea2 | Average | 6994     | 6,07     |
 | ddradseq_reads eb1      | Average | 55495,21 | 12,35    |
+
 
 
 
