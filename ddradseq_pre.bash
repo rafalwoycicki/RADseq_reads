@@ -10,7 +10,6 @@ qualada="20,20" # quality trimming adapters
 qualfil="20,20" # quality trimming filtering
 errbar=1 # number of allowed errors for demultiplexing
 errfil=0 # number of allowed errors for CUT site filtering
-errfilanc=0 # number of allowed error for anchored CUT site filtering
 thr=40 # number of processor threads to use
 lenada=140 # minimum length for adapter removal
 lenfil=140 # minimum length for filtering cut sites
@@ -18,8 +17,18 @@ readsP5="1.fq.gz" # reads from P5 primer - forward
 readsP7="2.fq.gz" # reads from P7 primer - reverse
 barcodes="barcodes_P1_cutadapt.txt" # fasta file with barcodes
 directory="/mnt/qnap/projects/RafalWoycicki/" # "" - if localy
+#adapters
+A_p5_5p="P5read5prim=TACACGACGCTCTTCCGATCT" # read P5 5prim sequencing adapter sequence
+A_p5_3p="P5read3prim=AGATCGGAAGAGCACACGTCT" # read P5 3prim sequencing adapter sequence
+A_p7_5p="P7read5prim=AGACGTGTGCTCTTCCGATCT" # read P7 5prim sequencing adapter sequence
+A_p7_3p="P7read3prim=AGATCGGAAGAGCGTCGTGTA" # read P7 3prim sequencing adapter sequence
+#cutsites
+C_p5_5p="P5read5primSBF1=^TGCAGG"
+C_p5_3p="P5read3primMSE1_DBR=TTAGCNNNNNNNN"
+C_p7_5p="P7read5primDBR_MSE1=^NNNNNNNNGCTAA"
+C_p7_3p="P7read3primSBF1=CCTGCA"
 
-echo "$iftest $qualada $qualfil $errbar $errfil $errfilanc $thr $lenada $lenfil $readsP5 $readsP7 $barcodes $directory"
+echo "variable: $iftest $qualada $qualfil $errbar $errfil $errfilanc $thr $lenada $lenfil $readsP5 $readsP7 $barcodes $directory A_p5_5p A_p5_3p A_p7_5p A_p7_3p"
 
 cat $barcodes | grep '>' | sed 's/>//' > barcodes.list
 
@@ -30,7 +39,7 @@ paste first.column Start.1.count Start.2.count > Start.counts
 
 echo "# 1. removing sequencing adapters:"
 
-cutadapt -j "$thr" -g P5read5prim=TACACGACGCTCTTCCGATCT -a P5read3prim=AGATCGGAAGAGCACACGTCT -G P7read5prim=AGACGTGTGCTCTTCCGATCT -A P7read3prim=AGATCGGAAGAGCGTCGTGTA -n 2 -m "$lenada" --max-n 0 -q "$qualada" -o "$directory"Adapters.1.fq.gz -p "$directory"Adapters.2.fq.gz $readsP5 $readsP7 > Adapters.txt
+cutadapt -j "$thr" -g "$A_p5_5p" -a "$A_p5_3p" -G "$A_p7_5p" -A "$A_p7_3p" -n 2 -m "$lenada" --max-n 0 -q "$qualada" -o "$directory"Adapters.1.fq.gz -p "$directory"Adapters.2.fq.gz $readsP5 $readsP7 > Adapters.txt
 
 zcat "$directory"Adapters.1.fq.gz | wc -l | awk '{print $1/4}' > Adapters.1.count
 zcat "$directory"Adapters.2.fq.gz | wc -l | awk '{print $1/4}' > Adapters.2.count
@@ -52,7 +61,7 @@ echo "# 3. filteringcutsites:"
 
 echo "$barcode"
 
-cutadapt --no-indels -j "$thr" -e "$errfil" -a "P5read5primSBF1=^TGCAGG;e=$errfilanc...P5read3primMSE1_DBR=TTAGCNNNNNNNN" -A "P7read5primDBR_MSE1=^NNNNNNNNGCTAA;e=$errfilanc...P7read3primSBF1=CCTGCA" -m "$lenfil" --max-n 0 -q "$qualfil" --action=retain --untrimmed-output "$directory"Filtered.1."$barcode".untrimmed.fq.gz --untrimmed-paired-output "$directory"Filtered.2."$barcode".untrimmed.fq.gz -o "$directory"Filtered.1."$barcode".fq.gz -p "$directory"Filtered.2."$barcode".fq.gz "$directory"Barcodes.1."$barcode".fq.gz "$directory"Barcodes.2."$barcode".fq.gz > Filtered."$barcode".txt
+cutadapt --no-indels -j "$thr" -e "$errfil" -a "$C_p5_5p...$C_p5_3p" -A "$C_p7_5p...$C_p7_3p" -m "$lenfil" --max-n 0 -q "$qualfil" --action=retain --untrimmed-output "$directory"Filtered.1."$barcode".untrimmed.fq.gz --untrimmed-paired-output "$directory"Filtered.2."$barcode".untrimmed.fq.gz -o "$directory"Filtered.1."$barcode".fq.gz -p "$directory"Filtered.2."$barcode".fq.gz "$directory"Barcodes.1."$barcode".fq.gz "$directory"Barcodes.2."$barcode".fq.gz > Filtered."$barcode".txt
 
 zcat "$directory"Filtered.1."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Filtered.1."$barcode".count
 zcat "$directory"Filtered.2."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Filtered.2."$barcode".count
@@ -63,13 +72,13 @@ echo "# 4. rescuing untrimmed reads:"
 
 # P5 forward
 
-cutadapt --no-indels -j "$thr" -e "$errfil" -g "P5read5primSBF1=^TGCAGG;e=$errfilanc" -m "$lenfil" --max-n 0 -q "$qualfil" --action=retain --discard-untrimmed -o "$directory"Rescued.1."$barcode".fq.gz "$directory"Filtered.1."$barcode".untrimmed.fq.gz > Rescued.1."$barcode".txt
+cutadapt --no-indels -j "$thr" -e "$errfil" -g "$C_p5_5p" -m "$lenfil" --max-n 0 -q "$qualfil" --action=retain --discard-untrimmed -o "$directory"Rescued.1."$barcode".fq.gz "$directory"Filtered.1."$barcode".untrimmed.fq.gz > Rescued.1."$barcode".txt
 
 zcat "$directory"Rescued.1."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Rescued.1."$barcode".count
 
 # P7 reverse
 
-cutadapt --no-indels -j "$thr" -e "$errfil" -g "P7read5primDBR_MSE1=^NNNNNNNNGCTAA;e=$errfilanc" -m "$lenfil" --max-n 0 -q "$qualfil" --action=retain --discard-untrimmed -o "$directory"Rescued.2."$barcode".fq.gz "$directory"Filtered.2."$barcode".untrimmed.fq.gz > Rescued.2."$barcode".txt
+cutadapt --no-indels -j "$thr" -e "$errfil" -g "$C_p7_5p" -m "$lenfil" --max-n 0 -q "$qualfil" --action=retain --discard-untrimmed -o "$directory"Rescued.2."$barcode".fq.gz "$directory"Filtered.2."$barcode".untrimmed.fq.gz > Rescued.2."$barcode".txt
 
 zcat "$directory"Rescued.2."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Rescued.2."$barcode".count
 
