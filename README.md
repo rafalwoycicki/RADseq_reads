@@ -95,7 +95,7 @@ The script outputs the statistics in the form of the number of the reads left fo
 
 pipeline inspired by clone filter script (https://catchenlab.life.illinois.edu/stacks/comp/clone_filter.php) from STACKS package for deduplication of reads based on DBR region in P7 reads.
 
-There are several variables to be set before running the script (will me soon modified to be set in command line.
+There are several variables to be set before running the script (will me soon modified to be set in command line):
 
 #### iftest="-0" # "1" if test "-0" if not test
 #### directory="/mnt/qnap/projects/RafalWoycicki/" # "" - if localy
