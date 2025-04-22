@@ -23,10 +23,10 @@ A_p5_3p="P5read3prim=AGATCGGAAGAGCACACGTCT" # read P5 3prim sequencing adapter s
 A_p7_5p="P7read5prim=AGACGTGTGCTCTTCCGATCT" # read P7 5prim sequencing adapter sequence
 A_p7_3p="P7read3prim=AGATCGGAAGAGCGTCGTGTA" # read P7 3prim sequencing adapter sequence
 #cutsites
-C_p5_5p="P5read5primSBF1=^TGCAGG"
-C_p5_3p="P5read3primMSE1_DBR=TTAGCNNNNNNNN"
-C_p7_5p="P7read5primDBR_MSE1=^NNNNNNNNGCTAA"
-C_p7_3p="P7read3primSBF1=CCTGCA"
+C_p5_5p="P5read5primSBF1=^TGCAGG" # read P5 5prim cut site for the SBF1 RE
+C_p5_3p="P5read3primMSE1_DBR=TTAGCNNNNNNNN" # read P5 3prim cut site for the MSE1 RE including DBR region
+C_p7_5p="P7read5primDBR_MSE1=^NNNNNNNNGCTAA" # read P7 5prim cut site for the MSE1 RE including DBR region
+C_p7_3p="P7read3primSBF1=CCTGCA" # read P7 3 prim cut site for the SBF1 RE
 
 echo "variable: $iftest $qualada $qualfil $errbar $errfil $errfilanc $thr $lenada $lenfil $readsP5 $readsP7 $barcodes $directory A_p5_5p A_p5_3p A_p7_5p A_p7_3p"
 
