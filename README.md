@@ -88,6 +88,7 @@ There are several variables to be set before running the script (will me soon mo
 #### len=130 # lengthof the final reads
 #### thr=40 # nymber of processor therds to use for cutadapt
 #### err=0 # numner of mismatches allowed adapter sequence for cutadapt
+#### p7_5p_seq="P7read5primDBR_MSE1=^NNNNNNNNGC" # name and sequence of the nucleotides filtered by the final reads shortening cutadapt script (for details check the cutadapt manual)
 
 This script takes as input the paired sequences after the cut sites filtering step of the ddradseq_pre.bash script in the form of "Filtered.?.{barcode}.fq.gz" files.
 
