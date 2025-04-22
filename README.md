@@ -8,6 +8,8 @@ pipeline for reads preprocessing from ddRADseq experiments done similar to one d
 
 The datasets to test the software were kindly delivered by Prof. Maciej Pabijan (Institute of Zoology and Biomedical Research, Faculty of Biology, Jagiellonian University, Kraków, Poland).
 
+---
+
 pipeline uses cutadapt 5.0 (https://doi.org/10.14806/ej.17.1.200).
 
 when using specific conda envinorment like in my environment for cutadapt 5.0 pipeline, one needs to run the script by: source <<file name>> to enable loading this specific envinorment. When not using CONDA you can comment out the line with:
