@@ -17,8 +17,9 @@
 | eb | allowed mismatches in barcode | |
 | ea | allowed mismatches in sequencing adapter | |
 
+### Old dataset 130nt All
 
-| Old dataset 130nt All   |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
+| preprocessing & deduplication   |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
 |-------------------------|---------|--------|--------|--------|--------|--------|--------|
 | process_radtags eb2 ea2 | Average | 1,11%  | 1,11%  | 7,86%  | 0,23%  | 0,49%  | 0,49%  |
 | ddradseq_reads eb1      | Average | 7,11%  | 7,11%  | 0,46%  | 0,22%  | 2,56%  | 2,56%  |
@@ -29,7 +30,7 @@
 </p>
 
 
-| Old dataset 130nt All   |         | Stacks     | Mean_cov |
+| ustacks results |         | Stacks     | Mean_cov |
 |-------------------------|---------|------------|----------|
 | process_radtags eb2 ea2 | Average | 120675,625 | 10,51    |
 | ddradseq_reads eb1      | Average | 131449,75  | 62,66    |
