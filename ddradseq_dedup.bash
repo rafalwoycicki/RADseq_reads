@@ -1,15 +1,69 @@
 #!/bin/bash
 
+# Must be sourced: source ddradseq_dedup.bash [options]
+
 conda activate cutadapt
 
-iftest="-0" # 1 if test "-0" if not test
-directory="/mnt/qnap/projects/RafalWoycicki/" # set the directory to save the files, set "" - if localy
+iftest="1" # 1 if test "-0" if not test
+directory="" # set the directory to save the files, set "" - if localy
 p5len=130 #length of p5 read with SBF1 cut site beginning with ^TGCA
 p7len=140 #length of p7 read with MSE1 cut site and DBR.
-len=130 # lengthof the final reads
-thr=40 # nymber of processor therds to use for cutadapt
+len=130 # length of the final reads
+thr=10 # nymber of processor therds to use for cutadapt
 err=0 # numner of mismatches allowed adapter sequence for cutadapt
 p7_5p_seq="P7read5primDBR_MSE1=^NNNNNNNNGC" # name and sequence of the nucleotides filtered by the final reads shortening cutadapt script (for details check the cutadapt manual)
+
+# Help message
+usage() {
+  echo "Usage: source ddradseq_dedup.bash [options]"
+  echo "Options:"
+  echo "  --iftest <value>         Set test mode: 1 for testing one barcode (default), -0 for not testing"
+  echo "  --directory <path>       Project output directory set to blank/nothing if locally (default: locally)"
+  echo "  --p5len <value>          length of p5 read with SBF1 cut site beginning with ^TGCA (default: 130)"
+  echo "  --p7len <value>          length of p7 read with MSE1 cut site and DBR (default: 140)"
+  echo "  --len <value>            length of the final reads (default: 130)"
+  echo "  --thr <value>            Number of threads (default: 10)"
+  echo "  --err <value>            Number of mismatches allowed in adapter sequence for cutadapt (default: 0)"
+  echo "  --p7_5p_seq <value>      P7 5' outer cutsite sequence (default: P7read5primDBR_MSE1=^NNNNNNNNGC)"
+  echo "  --help                   Show this help message"
+}
+
+# PROTECTION: Require at least one argument
+if [ "$#" -eq 0 ]; then
+  echo "ERROR: No options provided."
+  usage
+  return 1
+fi
+
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+  key="$1"
+  case $key in
+    --iftest) iftest="$2"; shift; shift ;;
+    --directory) directory="$2"; shift; shift ;;
+    --p5len) p5len="$2"; shift; shift ;;
+    --p7len) p7len="$2"; shift; shift ;;
+    --len) len="$2"; shift; shift ;;
+    --thr) thr="$2"; shift; shift ;;
+    --err) err="$2"; shift; shift ;;
+    --p7_5p_seq) p7_5p_seq="$2"; shift; shift ;;
+    --help) usage; return 0 ;;
+    *) echo "Unknown option: $1"; usage; return 1 ;;
+  esac
+done
+
+# Print all variables for verification
+echo "Variables set:"
+echo "iftest=$iftest"
+echo "directory=$directory"
+echo "p5len=$p5len"
+echo "p7len=$p7len"
+echo "len=$len"
+echo "thr=$thr"
+echo "err=$err"
+echo "p7_5p_seq=$p7_5p_seq"
+
+# Start
 
 cat barcodes.list | head -n "$iftest" | while read barcode; do # normal lociation of start of the loop
 
