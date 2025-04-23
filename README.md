@@ -4,7 +4,7 @@
 ## The set of pipelines for reads preprocessing and deduplicating from ddRADseq experiments, helping getting more reads to be used by main STACKS (https://catchenlab.life.illinois.edu/stacks/) pipeline steps.
 
 ### The pipelines ddradseq_pre.bash and ddradseq_dedup.bash were written to help preprocessing reads from ddRADseq experiments using sequencing of double digested of genomic DNA inserted sorrounded by inline barcode on the P5 adaptor read and DBR region on the P7 adaptor read, the procedure modified from Schweyen et al.(DOI: 10.1086/BBLv227n2p146)
-### The new solution gave finally up to 10x more Stacks with Coverage 2-6 times higher than when preprocessing reads with the original proposed approach with STACKS's process_radtags and clone_filter. Comparison results in ComparisonFinal.ods (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/ComparisonsFinal.ods) file and in the Comparisons.md (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/Comparisons.md) file.
+#### The new solution gave finally up to 10x more Stacks with Coverage 2-6 times higher than when preprocessing reads with the original proposed approach with STACKS's process_radtags and clone_filter. Comparison results in ComparisonFinal.ods (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/ComparisonsFinal.ods) file and in the Comparisons.md (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/Comparisons.md) file.
 
 The 3 separate datasets to test the software together will all supplementary infrormation needed (experiment setup, sequencing adaptors, RE, barcodes and DBR used) were kindly delivered by Prof. Maciej Pabijan (Institute of Zoology and Biomedical Research, Faculty of Biology, Jagiellonian University, Kraków, Poland).
 
@@ -12,7 +12,7 @@ The 3 separate datasets to test the software together will all supplementary inf
 ### Dependencies: pipeline uses cutadapt 5.0 (https://doi.org/10.14806/ej.17.1.200), seqtk (https://github.com/lh3/seqtk), and awk scripting language.
 ### At this moment it is also using 'zcat' Linux command, so could be not working on MacOS.
 
-when using specific conda envinorment like in my environment for cutadapt 5.0 pipeline, one needs to run the script by: source <<file name>> to enable loading this specific envinorment. When not using CONDA you can comment out the line with:
+#### when using specific conda envinorment like in my environment for cutadapt 5.0 pipeline, one needs to run the script by: source <<file name>> to enable loading this specific envinorment. When not using CONDA you can comment out the line with:
 conda activate cutadapt
 
 # ddradseq_pre.bash
