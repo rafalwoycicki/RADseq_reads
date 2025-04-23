@@ -67,17 +67,17 @@ C_p7_3p="P7read3primSBF1=CCTGCA" # read P7 3 prim cut site for the SBF1 RE
 
 ### At this moment pipeline runs in 4 sections:
 
-#### 1. removing sequencing adapters:
+#### 1. Removing sequencing adapters:
 Uses adaptor sequences for both reads from both sites: 5' "TACACGACGCTCTTCCGATCT" and 3' "AGATCGGAAGAGCACACGTCT" for P5 reads as well as 5' "AGACGTGTGCTCTTCCGATCT" and 3' "AGATCGGAAGAGCGTCGTGTA" for P7 reads. The adaptor sequences are not required but when found are trimmed away. Uses as input paired reads.
 
 - Output file schema: Adapters.?.fq.gz
 
-#### 2. demultiplexing:
+#### 2. Demultiplexing:
 Uses barcode sequences anchored/required at the beginning of the 5' site of P5 read. Found barcodes are trimmed away. This step outputs paired reads sorted by the barcode found as well as untrimmed reads where barcode was not found. Uses as input the output of step 1.
 
 - Output file schema: Barcodes.?.{barcode}.fq.gz
 
-#### 3. filteringcutsites:
+#### 3. Filteringcutsites:
 Uses specific cut site sequences with DBR region. At this moment these are: 
 
 - For P5 reads: from the 5' site this is anchored/required at the beginning SBF1 cut site "^TGCAGG" and at the 3' end optional MSE1 cut site with DBR region "TTAGCNNNNNNNN".
@@ -87,7 +87,7 @@ Uses specific cut site sequences with DBR region. At this moment these are:
 - The cut sites and DBR regions are left intact and not trimmed away.
 - Output file schema: Filtered.?.{barcode}.fq.gz ( and Filtered.?.{barcode}.untrimmed.fq.gz )
 
-#### 4. rescuing untrimmed reads:
+#### 4. Rescuing untrimmed reads:
 This step tries to rescue P5 and P7 reads which in the previous step were in the output of untrimmed reads.
 
 - The script rescues P5 reads which does not have paired correct P7 read (therefore untrimmed by the previous step), but contain anchiored at the 5' of P5 read SBF1 cut site "^TGCAGG".
