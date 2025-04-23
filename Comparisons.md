@@ -40,8 +40,9 @@
   <img src="https://github.com/user-attachments/assets/350d5cfe-671f-420c-add0-7e5ffa9e2486" width="500" />
 </p>
 
+### New P1 130 130nt All
 
-| New P1 130 130nt All    |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
+| preprocessing & deduplication    |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
 |-------------------------|---------|--------|--------|--------|--------|--------|--------|
 | process_radtags eb2 ea2 | Average | 0,06%  | 0,06%  | 0,56%  | 0,10%  | 0,04%  | 0,04%  |
 | ddradseq_reads eb1      | Average | 0,44%  | 0,44%  | 0,04%  | 0,01%  | 0,33%  | 0,33%  |
@@ -52,7 +53,7 @@
 </p>
 
 
-| New P1 130 130nt All    |         | Stacks   | Mean_cov |
+| ustacks results    |         | Stacks   | Mean_cov |
 |-------------------------|---------|----------|----------|
 | process_radtags eb2 ea2 | Average | 3886,01  | 6,06     |
 | ddradseq_reads eb1      | Average | 58417,83 | 12,21    |
@@ -62,7 +63,9 @@
   <img src="https://github.com/user-attachments/assets/33e3c8fc-b28a-4496-8980-732a400035d6" width="500" />
 </p>
 
-| New P2 130 130nt All    |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
+### New P2 130 130nt All
+
+| preprocessing & deduplication    |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
 |-------------------------|---------|--------|--------|--------|--------|--------|--------|
 | process_radtags eb2 ea2 | Average | 0,06%  | 0,06%  | 0,52%  | 0,09%  | 0,04%  | 0,04%  |
 | ddradseq_reads eb1      | Average | 0,40%  | 0,40%  | 0,05%  | 0,14%  | 0,27%  | 0,27%  |
@@ -73,7 +76,7 @@
 </p>
 
 
-| New P2 130 130nt All    |         | Stacks   | Mean_cov |
+| ustacks results    |         | Stacks   | Mean_cov |
 |-------------------------|---------|----------|----------|
 | process_radtags eb2 ea2 | Average | 6994     | 6,07     |
 | ddradseq_reads eb1      | Average | 55495,21 | 12,35    |
