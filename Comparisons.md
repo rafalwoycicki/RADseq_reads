@@ -40,7 +40,7 @@
   <img src="https://github.com/user-attachments/assets/350d5cfe-671f-420c-add0-7e5ffa9e2486" width="500" />
 </p>
 
-### New P1 130 130nt All
+### New P1 130nt All
 
 | preprocessing & deduplication    |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
 |-------------------------|---------|--------|--------|--------|--------|--------|--------|
@@ -63,7 +63,7 @@
   <img src="https://github.com/user-attachments/assets/33e3c8fc-b28a-4496-8980-732a400035d6" width="500" />
 </p>
 
-### New P2 130 130nt All
+### New P2 130nt All
 
 | preprocessing & deduplication    |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
 |-------------------------|---------|--------|--------|--------|--------|--------|--------|
