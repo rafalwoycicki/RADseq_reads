@@ -1,6 +1,14 @@
 ## The pipelines ddradseq_pre.bash and ddradseq_dedup.bash were written to help preprocessing reads from ddRADseq experiments using sequencing of double digested of genomic DNA inserted sorrounded by inline barcode on the P5 adaptor read and DBR region on the P7 adaptor read, the procedure modified from Schweyen et al.
 ### The new solution gave finally up to 10x more Stacks with Coverage 2-6 times higher than when preprocessing reads with the original proposed approach with STACKS's process_radtags and clone_filter. Comparison results in ComparisonFinal.ods (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/ComparisonsFinal.ods) file and below.
-### 
+### The command line schemas used for preprocess_radtags, clone_filter and ustacks are shown here:
+#### process_radtags -i gzfastq -1 ./1.fq.gz -2 ./2.fq.gz -b ./barcodes_P1.txt -o ./demuxtest_P1 --barcode-dist-1 2 -t 130 --discards -c -q -r --inline-null --renz_1 sbfI --renz-2 mseI --adapter-1 ACACTCTTTCCCTACACGACGCTCTTCCGATCT --adapter-2 GTGACTGGAGTTCAGACGTGTGCTCTTCCGATC --adapter-mm 2
+#### clone_filter -1 "$barcode".1.fq.gz -2 "$barcode".2.fq.gz -o "$barcode".cl_fil_ninl.DIR -i gzfastq -D --oligo_len_2 8 --null_inline
+#### ustacks -f "$barcode".cl_fil_ninl.DIR/"$barcode".1.1.fq.gz -o ./"$barcode".cl_fil_ninl.DIR -M 2 -m 3 -t 10
+##### The options used in ddradseq_pre and ddradseq_dedup were default values as shown in respective code.
+##### In process_radtags we allowed 2 mismatches per sequencing adaptor and 2 mismatches in inline barcode.
+##### In ddradseq_pre we allowe 2 errors per sequencing adaptor and 1 error in inline barcode.
+###### Allowing 2 errors in barcode in process_radtags was crucial in getting enough reads after this step.
+
 
 | Legend | | |
 |---|---|---|
@@ -9,6 +17,8 @@
 | dpa | paired reads after deduplication based on DBR region | clone_filter / ddradseq_dedup output|
 | p5 | reads from p5 adaptor site (forward reads) |  |
 | p7 | reads from p7 adaptor site (reverse reads) |  |
+| eb | allowed mismatches in barcode | |
+| ea | allowed mismatches in sequencing adapter | |
 
 
 | Old dataset 130nt All   |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
