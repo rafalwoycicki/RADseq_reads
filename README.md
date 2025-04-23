@@ -10,7 +10,7 @@ The 3 separate datasets to test the software together will all supplementary inf
 
 ---
 ### Dependencies
-pipeline uses cutadapt 5.0 (https://doi.org/10.14806/ej.17.1.200), seqtk (https://github.com/lh3/seqtk), and awk scripting language. At this moment it is also using 'zcat' Linux command, so could be not working on MacOS. When using specific conda envinorment like in my environment for cutadapt 5.0 pipeline, one needs to run the script by: source <<file name>> to enable loading this specific envinorment.
+pipeline uses cutadapt 5.0 (https://doi.org/10.14806/ej.17.1.200), seqtk (https://github.com/lh3/seqtk), and awk scripting language. At this moment it is also using 'zcat' Linux command, so could be not working on MacOS. When using specific conda envinorment like in my environment for cutadapt 5.0 pipeline, one needs to run the script by: source <<file name>> to enable loading this specific envinorment. When  ot using conda environment one can comment out the line with 'conda activate environment'.
 
 ---
 # ddradseq_pre.bash
