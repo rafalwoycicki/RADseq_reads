@@ -10,8 +10,7 @@ The 3 separate datasets to test the software together will all supplementary inf
 
 ---
 ### Dependencies: 
-pipeline uses cutadapt 5.0 (https://doi.org/10.14806/ej.17.1.200), seqtk (https://github.com/lh3/seqtk), and awk scripting language. At this moment it is also using 'zcat' Linux command, so could be not working on MacOS. When using specific conda envinorment like in my environment for cutadapt 5.0 pipeline, one needs to run the script by: source <<file name>> to enable loading this specific envinorment. When not using CONDA you can comment out the line with:
-conda activate cutadapt
+pipeline uses cutadapt 5.0 (https://doi.org/10.14806/ej.17.1.200), seqtk (https://github.com/lh3/seqtk), and awk scripting language. At this moment it is also using 'zcat' Linux command, so could be not working on MacOS. When using specific conda envinorment like in my environment for cutadapt 5.0 pipeline, one needs to run the script by: source <<file name>> to enable loading this specific envinorment.
 ---
 # ddradseq_pre.bash
 pipeline inspired by process_radtags script (https://catchenlab.life.illinois.edu/stacks/comp/process_radtags.php) from the STACKS pipeline (https://catchenlab.life.illinois.edu/stacks/), outputing quality filtered, demultiplexed and cut site filtered paired and unpaired reads to be used by next STACKS steps.
