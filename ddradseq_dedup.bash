@@ -142,5 +142,7 @@ rm *.count
 
 rm -rf "$directory"*.fasta
 rm -rf "$directory"*.table
+rm -rf "$directory"Filtered.*.p5p7dedupl.*.fq
+rm -rf "$directory"Rescued.2.*.p7dedupl.fq
 
 rm first.column
