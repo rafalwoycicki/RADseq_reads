@@ -126,8 +126,8 @@ cat $barcodes | grep '>' | sed 's/>//' > barcodes.list
 
 echo "# counting input reads"
 
-zcat $readsP5 | wc -l | awk '{print $1/4}' > Start.1.count
-zcat $readsP7 | wc -l | awk '{print $1/4}' > Start.2.count
+gzip -cd $readsP5 | wc -l | awk '{print $1/4}' > Start.1.count
+gzip -cd $readsP7 | wc -l | awk '{print $1/4}' > Start.2.count
 echo "Original" > first.column
 paste first.column Start.1.count Start.2.count > Start.counts
 
@@ -135,8 +135,8 @@ echo "# 1. removing sequencing adapters:"
 
 cutadapt -j "$thr" -g "$A_p5_5p" -a "$A_p5_3p" -G "$A_p7_5p" -A "$A_p7_3p" -n 2 -m "$lenada" --max-n 0 -q "$qualada" -o "$directory"Adapters.1.fq.gz -p "$directory"Adapters.2.fq.gz $readsP5 $readsP7 > Adapters.txt
 
-zcat "$directory"Adapters.1.fq.gz | wc -l | awk '{print $1/4}' > Adapters.1.count
-zcat "$directory"Adapters.2.fq.gz | wc -l | awk '{print $1/4}' > Adapters.2.count
+gzip -cd "$directory"Adapters.1.fq.gz | wc -l | awk '{print $1/4}' > Adapters.1.count
+gzip -cd "$directory"Adapters.2.fq.gz | wc -l | awk '{print $1/4}' > Adapters.2.count
 echo "After_adapters_removal" > first.column
 paste first.column Adapters.1.count Adapters.2.count > Adapters.counts
 
@@ -146,8 +146,8 @@ cutadapt --no-indels -j "$thr" -e "$errbar" -g ^file:"$barcodes" --action=trim -
 
 cat barcodes.list | head -n "$iftest" | while read barcode; do # normal lociation of start of the loop
 
-zcat "$directory"Barcodes.1."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Barcodes.1."$barcode".count
-zcat "$directory"Barcodes.2."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Barcodes.2."$barcode".count
+gzip -cd "$directory"Barcodes.1."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Barcodes.1."$barcode".count
+gzip -cd "$directory"Barcodes.2."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Barcodes.2."$barcode".count
 echo "$barcode"."demux" > first.column
 paste first.column Barcodes.1."$barcode".count Barcodes.2."$barcode".count > Barcodes."$barcode".counts
 
@@ -157,8 +157,8 @@ echo "$barcode"
 
 cutadapt --no-indels -j "$thr" -e "$errfil" -a "$C_p5_5p...$C_p5_3p" -A "$C_p7_5p...$C_p7_3p" -m "$lenfil" --max-n 0 -q "$qualfil" --action=retain --untrimmed-output "$directory"Filtered.1."$barcode".untrimmed.fq.gz --untrimmed-paired-output "$directory"Filtered.2."$barcode".untrimmed.fq.gz -o "$directory"Filtered.1."$barcode".fq.gz -p "$directory"Filtered.2."$barcode".fq.gz "$directory"Barcodes.1."$barcode".fq.gz "$directory"Barcodes.2."$barcode".fq.gz > Filtered."$barcode".txt
 
-zcat "$directory"Filtered.1."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Filtered.1."$barcode".count
-zcat "$directory"Filtered.2."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Filtered.2."$barcode".count
+gzip -cd "$directory"Filtered.1."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Filtered.1."$barcode".count
+gzip -cd "$directory"Filtered.2."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Filtered.2."$barcode".count
 echo "$barcode"."filtered" > first.column
 paste first.column Filtered.1."$barcode".count Filtered.2."$barcode".count > Filtered."$barcode".counts
 
@@ -168,13 +168,13 @@ echo "# 4. rescuing untrimmed reads:"
 
 cutadapt --no-indels -j "$thr" -e "$errfil" -g "$C_p5_5p" -m "$lenfil" --max-n 0 -q "$qualfil" --action=retain --discard-untrimmed -o "$directory"Rescued.1."$barcode".fq.gz "$directory"Filtered.1."$barcode".untrimmed.fq.gz > Rescued.1."$barcode".txt
 
-zcat "$directory"Rescued.1."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Rescued.1."$barcode".count
+gzip -cd "$directory"Rescued.1."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Rescued.1."$barcode".count
 
 # P7 reverse
 
 cutadapt --no-indels -j "$thr" -e "$errfil" -g "$C_p7_5p" -m "$lenfil" --max-n 0 -q "$qualfil" --action=retain --discard-untrimmed -o "$directory"Rescued.2."$barcode".fq.gz "$directory"Filtered.2."$barcode".untrimmed.fq.gz > Rescued.2."$barcode".txt
 
-zcat "$directory"Rescued.2."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Rescued.2."$barcode".count
+gzip -cd "$directory"Rescued.2."$barcode".fq.gz | wc -l | awk '{print $1/4}' > Rescued.2."$barcode".count
 
 echo "$barcode"."rescued" > first.column
 paste first.column Rescued.1."$barcode".count Rescued.2."$barcode".count > Rescued."$barcode".counts
