@@ -48,7 +48,7 @@ usage() {
   echo "  --A_p5_3p <value>        P5 3' adapter sequence (default: P5read3prim=AGATCGGAAGAGCACACGTCT)"
   echo "  --A_p7_5p <value>        P7 5' adapter sequence (default: P7read5prim=AGACGTGTGCTCTTCCGATCT)"
   echo "  --A_p7_3p <value>        P7 3' adapter sequence (default: P7read3prim=AGATCGGAAGAGCGTCGTGTA)"
-  echo "  --cutsites <file>        REQUIRED: Line by line list of 4 cutsite sequences (C_p5_5p=, C_p5_3p=, C_p7_5p=, C_p7_3p=) to be used as linked adapters by CUTADAPT"
+  echo "  --cutsites <file>        REQUIRED: List of 4 cutsite sequences (C_p5_5p=, C_p5_3p=, C_p7_5p=, C_p7_3p=) to be used as linked adapters by CUTADAPT, check example cutsites.txt file"
   echo "  --help                   Show this help message"
 }
 
@@ -96,12 +96,12 @@ if [ ! -f "$cutsites" ]; then
   return 1
 fi
 
+echo "Loading cut-site definitions from: $cutsites"
 while IFS='=' read -r key value; do
   if [[ "$key" =~ ^C_ && -n "$value" ]]; then
-    declare "$key=$value"
+    eval "$key=\"$value\""
   fi
 done < "$cutsites"
-
 
 # Print all variables for verification
 echo "Variables set:"
