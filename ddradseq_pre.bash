@@ -21,7 +21,7 @@ readsP5="1.fq.gz" # reads from P5 primer - forward
 readsP7="2.fq.gz" # reads from P7 primer - reverse
 barcodes="" # fasta file with barcodes
 directory="" # "" - if localy
-cutsites="" # REQUIRED: File with cutsite sequences
+cutsites="cutsites.txt" # REQUIRED: File with cutsite sequences
 #adapters
 A_p5_5p="P5read5prim=TACACGACGCTCTTCCGATCT" # read P5 5prim sequencing adapter sequence
 A_p5_3p="P5read3prim=AGATCGGAAGAGCACACGTCT" # read P5 3prim sequencing adapter sequence
@@ -48,7 +48,7 @@ usage() {
   echo "  --A_p5_3p <value>        P5 3' adapter sequence (default: P5read3prim=AGATCGGAAGAGCACACGTCT)"
   echo "  --A_p7_5p <value>        P7 5' adapter sequence (default: P7read5prim=AGACGTGTGCTCTTCCGATCT)"
   echo "  --A_p7_3p <value>        P7 3' adapter sequence (default: P7read3prim=AGATCGGAAGAGCGTCGTGTA)"
-  echo "  --cutsites <file>        REQUIRED: List of 4 cutsite sequences (C_p5_5p=, C_p5_3p=, C_p7_5p=, C_p7_3p=) to be used as linked adapters by CUTADAPT, check example cutsites.txt file"
+  echo "  --cutsites <file>        REQUIRED: List of 4 cutsite sequences (C_p5_5p=, C_p5_3p=, C_p7_5p=, C_p7_3p=) to be used as linked adapters by CUTADAPT, check default cutsites.txt file"
   echo "  --help                   Show this help message"
 }
 
