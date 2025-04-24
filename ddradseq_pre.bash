@@ -21,16 +21,12 @@ readsP5="1.fq.gz" # reads from P5 primer - forward
 readsP7="2.fq.gz" # reads from P7 primer - reverse
 barcodes="" # fasta file with barcodes
 directory="" # "" - if localy
+cutsites="" # REQUIRED: File with cutsite sequences
 #adapters
 A_p5_5p="P5read5prim=TACACGACGCTCTTCCGATCT" # read P5 5prim sequencing adapter sequence
 A_p5_3p="P5read3prim=AGATCGGAAGAGCACACGTCT" # read P5 3prim sequencing adapter sequence
 A_p7_5p="P7read5prim=AGACGTGTGCTCTTCCGATCT" # read P7 5prim sequencing adapter sequence
 A_p7_3p="P7read3prim=AGATCGGAAGAGCGTCGTGTA" # read P7 3prim sequencing adapter sequence
-#cutsites
-C_p5_5p="P5read5primSBF1=^TGCAGG" # read P5 5prim cut site for the SBF1 RE
-C_p5_3p="P5read3primMSE1_DBR=TTAGCNNNNNNNN" # read P5 3prim cut site for the MSE1 RE including DBR region
-C_p7_5p="P7read5primDBR_MSE1=^NNNNNNNNGCTAA" # read P7 5prim cut site for the MSE1 RE including DBR region
-C_p7_3p="P7read3primSBF1=CCTGCA" # read P7 3 prim cut site for the SBF1 RE
 
 # Help message
 usage() {
@@ -52,10 +48,7 @@ usage() {
   echo "  --A_p5_3p <value>        P5 3' adapter sequence (default: P5read3prim=AGATCGGAAGAGCACACGTCT)"
   echo "  --A_p7_5p <value>        P7 5' adapter sequence (default: P7read5prim=AGACGTGTGCTCTTCCGATCT)"
   echo "  --A_p7_3p <value>        P7 3' adapter sequence (default: P7read3prim=AGATCGGAAGAGCGTCGTGTA)"
-  echo "  --C_p5_5p <value>        P5 5' cutsite sequence (default: P5read5primSBF1=^TGCAGG)"
-  echo "  --C_p5_3p <value>        P5 3' cutsite sequence (default: P5read3primMSE1_DBR=TTAGCNNNNNNNN)"
-  echo "  --C_p7_5p <value>        P7 5' cutsite sequence (default: P7read5primDBR_MSE1=^NNNNNNNNGCTAA)"
-  echo "  --C_p7_3p <value>        P7 3' cutsite sequence (default: P7read3primSBF1=CCTGCA)"
+  echo "  --cutsites <file>        REQUIRED: Line by line list of 4 cutsite sequences (C_p5_5p=, C_p5_3p=, C_p7_5p=, C_p7_3p=) to be used as linked adapters by CUTADAPT"
   echo "  --help                   Show this help message"
 }
 
@@ -86,14 +79,29 @@ while [[ $# -gt 0 ]]; do
     --A_p5_3p) A_p5_3p="$2"; shift; shift ;;
     --A_p7_5p) A_p7_5p="$2"; shift; shift ;;
     --A_p7_3p) A_p7_3p="$2"; shift; shift ;;
-    --C_p5_5p) C_p5_5p="$2"; shift; shift ;;
-    --C_p5_3p) C_p5_3p="$2"; shift; shift ;;
-    --C_p7_5p) C_p7_5p="$2"; shift; shift ;;
-    --C_p7_3p) C_p7_3p="$2"; shift; shift ;;
+    --cutsites) cutsites="$2"; shift; shift;;
     --help) usage; return 0 ;;
     *) echo "Unknown option: $1"; usage; return 1 ;;
   esac
 done
+
+# Load cutsite sequence from file
+if [ -z "$cutsites" ]; then
+  echo "ERROR: --cutsites file is required."
+  return 1
+fi
+
+if [ ! -f "$cutsites" ]; then
+  echo "ERROR: Cut-site file '$cutsites' not found."
+  return 1
+fi
+
+while IFS='=' read -r key value; do
+  if [[ "$key" =~ ^C_ && -n "$value" ]]; then
+    declare "$key=$value"
+  fi
+done < "$cutsites"
+
 
 # Print all variables for verification
 echo "Variables set:"
