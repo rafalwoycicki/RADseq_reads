@@ -89,8 +89,8 @@ Uses specific cut site sequences with DBR region. At this moment these are:
 #### 4. Rescuing untrimmed reads:
 This step tries to rescue P5 and P7 reads which in the previous step were in the output of untrimmed reads.
 
-- The script rescues P5 reads which does not have paired correct P7 read (therefore untrimmed by the previous step), but contain anchiored at the 5' of P5 read SBF1 cut site "^TGCAGG".
-- The script rescues P7 reads which does not have paired correct P5 read (therefore untrimmed by the previous step), but contain anchiored at the 5' of P7 read MSE1 cut site with DBR region "^NNNNNNNNGCTAA".
+- The script rescues P5 reads which does not have paired correct P7 read (therefore untrimmed by the previous step), but contain anchored SBF1 cut site "^TGCAGG" at the 5' of P5 read .
+- The script rescues P7 reads which does not have paired correct P5 read (therefore untrimmed by the previous step), but contain anchored MSE1 cut site with DBR region "^NNNNNNNNGCTAA" at the 5' of P7 read .
 - The cut sites and DBR regions are left intact and not trimmed away.
 - Output file schema: Rescued.?.{barcode}.fq.gz
 
@@ -118,10 +118,12 @@ p7_5p_seq="P7read5primDBR_MSE1=^NNNNNNNNGC" # name and sequence of the nucleotid
 - This script takes as input the paired sequences after the cut sites filtering step of the ddradseq_pre.bash script in the form of "Filtered.?.{barcode}.fq.gz" files.
 
 ### Algorithm:
-1. First only the P5 reads of the $p5len and P7 reads of the $p7len are considered and both the reads are trimmed to these lengths respectively
-   Tthe DBR sequence of the p7 reads is combined with the p5 read sequence and this combined sequences of P5 reads: DBR_P5read are sorted and only the unique sequences are left after comparison (one sequence from the multiplicated sequences is taken randomly). The unique genome sequnces are the ones existing only once with the specific DBR. So the additional "reads" being combination of DBR and P5read are considered PCR duplicates and not purged.
-3. As in practice the paired P7 reads of the P5 read are not all unique (DBR_P7read), this step filters the p7 reads to be the same as p5 reads and to be unique.
-4. Shortening all the reads to the final $len length as required by ustacks (https://catchenlab.life.illinois.edu/stacks/comp/ustacks.php )part of STACKS package. 
+1. First only the P5 reads of the $p5len and P7 reads of the $p7len are considered and both the reads are trimmed to these lengths respectively.
+2. The DBR sequences of the p7 reads are combined with the p5 reads sequences and these combined sequences of P5 reads (DBR_P5reads) are sorted.
+   - After sorting only the unique sequences are left after comparison (one sequence from the multiplicated sequences is retained randomly).
+   - The unique genome sequnces are the ones existing only once with the specific DBR. So the additional "DBR_P5reads" reads are considered PCR duplicates and purged.
+3. As in practice the paired P7 reads of the P5 reads are not all unique, this step double check that the p7 reads are unique (by using DBR_P7reads combination) and paired with the unique p5 reads.
+4. Shortening all the reads to the final $len length as required by ustacks (https://catchenlab.life.illinois.edu/stacks/comp/ustacks.php) part of STACKS package. 
 
 - The output file schema of the files ready to be used by "ustacks" is: Short.Filtered.{barcode}.p5p7dedupl.?.fq
 
