@@ -140,4 +140,6 @@ cat Start.counts Adapters.counts Barcodes.*.counts Filtered.*.counts Rescued.*.c
 
 rm *.count
 
+rm -rf "$directory"*.fasta
+
 rm first.column
