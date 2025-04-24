@@ -67,54 +67,38 @@ echo "p7_5p_seq=$p7_5p_seq"
 
 cat barcodes.list | head -n "$iftest" | while read barcode; do # normal lociation of start of the loop
 
-# deduplicating in Filtered in both reads
-
 echo "$barcode"
 
-echo "1"
-seqtk seq -A "$directory"Filtered.1."$barcode".fq.gz > "$directory"Filtered.1."$barcode".fasta
-seqtk seq -A "$directory"Filtered.2."$barcode".fq.gz > "$directory"Filtered.2."$barcode".fasta
+echo "# deduplicating paired reads"
 
-echo "2"
-cat "$directory"Filtered.1."$barcode".fasta | awk '/^>/{if (seq) print header "\t" seq; split($1,h," "); header=substr(h[1],2); seq=""} !/^>/ {seq = seq $0} END {if (seq) print header "\t" seq}' > "$directory"Filtered.1."$barcode".table
-cat "$directory"Filtered.2."$barcode".fasta | awk '/^>/{if (seq) print header "\t" seq; split($1,h," "); header=substr(h[1],2); seq=""} !/^>/ {seq = seq $0} END {if (seq) print header "\t" seq}' > "$directory"Filtered.2."$barcode".table
+seqtk seq -A "$directory"Filtered.1."$barcode".fq.gz | awk '/^>/{if (seq) print header "\t" seq; split($1,h," "); header=substr(h[1],2); seq=""} !/^>/ {seq = seq $0} END {if (seq) print header "\t" seq}' > "$directory"Filtered.1."$barcode".table
+seqtk seq -A "$directory"Filtered.2."$barcode".fq.gz | awk '/^>/{if (seq) print header "\t" seq; split($1,h," "); header=substr(h[1],2); seq=""} !/^>/ {seq = seq $0} END {if (seq) print header "\t" seq}' > "$directory"Filtered.2."$barcode".table
 
-echo "3"
 paste "$directory"Filtered.1."$barcode".table "$directory"Filtered.2."$barcode".table | awk -v p5len="$p5len" -v p7len="$p7len" '$1==$3 && length($2)>=p5len && length($4)>=p7len { $2=substr($2,1,p5len); $4=substr($4,1,p7len); if (match($4, /[AGCT]{8}GCTAA/)) { sub(/([AGCT]{8})GCTAA/, substr($4, RSTART, RLENGTH-5)"GC\tTAA", $4); } print $1"\t"$2"\t"$4; }' > "$directory"Filtered."$barcode".all.table
 
-echo "4"
 cat "$directory"Filtered."$barcode".all.table | awk '{ print $1"\t"$3"_"$2 }' | sort -k2,2 > "$directory"Filtered."$barcode".p5sorted.table
 cat "$directory"Filtered."$barcode".all.table | awk '{ print $1"\t"$3"_"$4 }' | sort -k2,2 > "$directory"Filtered."$barcode".p7sorted.table
 
-echo "5"
 cat "$directory"Filtered."$barcode".p5sorted.table | uniq -c -f1 | awk '{sub(/^ +/, "", $0); sub(/ +/, "\t", $0); print $0}' | awk '$1>0' | cut -f2 | sort > Filtered."$barcode".p5dedupl.list
 
-echo "6"
 awk 'NR==FNR {dedup[$1]; next} $1 in dedup' Filtered."$barcode".p5dedupl.list "$directory"Filtered."$barcode".p7sorted.table > "$directory"Filtered."$barcode".p7sorted.p5dedupl.table
 
-echo "7"
 cat "$directory"Filtered."$barcode".p7sorted.p5dedupl.table | sort -k2,2 | uniq -c -f1 | awk '{sub(/^ +/, "", $0); sub(/ +/, "\t", $0); print $0}' | awk '$1==1' | cut -f2 | sort > Filtered."$barcode".p7sorted.p5dedupl.list
 
-echo "8"
 comm -12 Filtered."$barcode".p7sorted.p5dedupl.list Filtered."$barcode".p5dedupl.list > Filtered."$barcode".p5p7dedupl.list
 
-echo "9"
 seqtk subseq "$directory"Filtered.1."$barcode".fq.gz Filtered."$barcode".p5p7dedupl.list > "$directory"Filtered."$barcode".p5p7dedupl.1.fq
 seqtk subseq "$directory"Filtered.2."$barcode".fq.gz Filtered."$barcode".p5p7dedupl.list > "$directory"Filtered."$barcode".p5p7dedupl.2.fq
 
-echo "10"
-#shortening the reads so they are equal in length
 cutadapt -j "$thr" --length "$len" -o "$directory"Short.Filtered."$barcode".p5p7dedupl.1.fq "$directory"Filtered."$barcode".p5p7dedupl.1.fq > FilterShort.1.txt
 cutadapt -j "$thr" --length "$len" -e "$err" -g "$p7_5p_seq" -o "$directory"Short.Filtered."$barcode".p5p7dedupl.2.fq "$directory"Filtered."$barcode".p5p7dedupl.2.fq > FilterShort.2.txt #removing DBR with additional "GC" bases from P7 reads
 
-echo "11"
 cat "$directory"Short.Filtered."$barcode".p5p7dedupl.1.fq | wc -l | awk '{print $1/4}' > Short.Filtered."$barcode".p5p7dedupl.1.count
 cat "$directory"Short.Filtered."$barcode".p5p7dedupl.2.fq | wc -l | awk '{print $1/4}' > Short.Filtered."$barcode".p5p7dedupl.2.count
 echo "$barcode"."dedupl_filtered" > first.column
 paste first.column Short.Filtered."$barcode".p5p7dedupl.1.count Short.Filtered."$barcode".p5p7dedupl.2.count > FilDedup."$barcode".p5p7dedupl.counts
 
-echo "12"
-# deduplicating in Rescued in P7 read only
+echo "# deduplicating single Rescued P7 reads"
 
 seqtk seq -A "$directory"Rescued.2."$barcode".fq.gz > "$directory"Rescued.2."$barcode".fasta
 
@@ -140,7 +124,6 @@ cat Start.counts Adapters.counts Barcodes.*.counts Filtered.*.counts Rescued.*.c
 
 rm *.count
 
-rm -rf "$directory"*.fasta
 rm -rf "$directory"*.table
 rm -rf "$directory"Filtered.*.p5p7dedupl.*.fq
 rm -rf "$directory"Rescued.2.*.p7dedupl.fq
