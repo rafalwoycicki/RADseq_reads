@@ -1,6 +1,6 @@
 #!/bin/bash
 
-directory="/mnt/qnap/projects/RafalWoycicki/MP/P1_MKDL240011297-1A_22LMFJLT4_L2/" # "" if locally
+directory="/mnt/qnap/projects/RafalWoycicki/" # "" if locally
 
 cat barcodes.list | while read barcode; do
 
