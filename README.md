@@ -29,19 +29,19 @@ pipeline inspired by process_radtags script (https://catchenlab.life.illinois.ed
 There are several variables to be set on command line before running the script (the '--help' option prints them all):
 
 ```bash
-iftest="-0" # "1" for testing one barcode, "-0" for normal analysis of whole dataset
+iftest="1" # 1 for testing one barcode, "-0" for not testing
 qualada="20,20" # quality trimming adapters
 qualfil="20,20" # quality trimming filtering
-errbar=1 # number of allowed errors for demultiplexing
+errbar=0 # number of allowed errors for demultiplexing
 errfil=0 # number of allowed errors for CUT site filtering
-errfilanc=0 # number of allowed error for anchored CUT site filtering
-thr=40 # number of processor threads to use
+thr=10 # number of processor threads to use
 lenada=140 # minimum length for adapter removal
 lenfil=140 # minimum length for filtering cut sites
 readsP5="1.fq.gz" # reads from P5 primer - forward
 readsP7="2.fq.gz" # reads from P7 primer - reverse
-barcodes="barcodes_P1_cutadapt.txt" # fasta file with barcodes
-directory="/mnt/qnap/projects/RafalWoycicki/" # directory to save BIG data files, "" - if localy
+barcodes="" # fasta file with barcodes
+directory="" # "" - if localy
+cutsites="cutsites.txt" # REQUIRED: File with cutsite sequences
 ```
 Remember:
 - You need to input proper PATH TO READS TEMPLATE at "$reads" variable
@@ -56,12 +56,19 @@ A_p7_5p="P7read5prim=AGACGTGTGCTCTTCCGATCT" # read P7 5prim sequencing adapter s
 A_p7_3p="P7read3prim=AGATCGGAAGAGCGTCGTGTA" # read P7 3prim sequencing adapter sequence
 ```
 
-### Cutsites adapters. These need to be adjusted to your specific RAD-seq experiment.
+### Cutsites adapters in the <cutsites.txt> file. These need to be adjusted to your specific RAD-seq experiment and 
 ```bash
-C_p5_5p="P5read5primSBF1=^TGCAGG" # read P5 5prim cut site for the SBF1 RE
-C_p5_3p="P5read3primMSE1_DBR=TTAGCNNNNNNNN" # read P5 3prim cut site for the MSE1 RE including DBR region
-C_p7_5p="P7read5primDBR_MSE1=^NNNNNNNNGCTAA" # read P7 5prim cut site for the MSE1 RE including DBR region
-C_p7_3p="P7read3primSBF1=CCTGCA" # read P7 3 prim cut site for the SBF1 RE
+  # read P5 5prim cut site for the SBF1 RE
+C_p5_5p=P5read5primSBF1=^TGCAGG
+
+# read P5 3prim cut site for the MSE1 RE including DBR region
+C_p5_3p=P5read3primMSE1_DBR=TTAGCNNNNNNNN
+
+# read P7 5prim cut site for the MSE1 RE including DBR region
+C_p7_5p=P7read5primDBR_MSE1=^NNNNNNNNGCTAA
+
+# read P7 3 prim cut site for the SBF1 RE
+C_p7_3p=P7read3primSBF1=CCTGCA
 ```
 
 ### At this moment pipeline runs in 4 sections:
@@ -105,14 +112,18 @@ Pipeline inspired by `clone_filter` script (https://catchenlab.life.illinois.edu
 
 There are several variables to be set before running the script in the command line:
 ```bash
-iftest="-0" # "1" if test "-0" if not test
-directory="/mnt/qnap/projects/RafalWoycicki/" # "" - if localy
+iftest="1" # 1 if test "-0" if not test
+directory="" # set the directory to save the files, set "" - if localy
 p5len=130 #length of p5 read with SBF1 cut site beginning with ^TGCA
 p7len=140 #length of p7 read with MSE1 cut site and DBR.
-len=130 # lengthof the final reads
-thr=40 # nymber of processor therds to use for cutadapt
+len=130 # length of the final reads
+thr=10 # number of processor therds to use for cutadapt
 err=0 # numner of mismatches allowed adapter sequence for cutadapt
-p7_5p_seq="P7read5primDBR_MSE1=^NNNNNNNNGC" # name and sequence of the nucleotides filtered by the final reads shortening cutadapt script (for details check the cutadapt manual)
+barcodes="" # fasta file with barcodes
+dbr_sequence="NNNNNNNN" # DBR sequence in nucleotides
+dbr_pattern="[AGCT]{8}" # the DBR regex pattern
+motif_cut_adapter="GC" # the outer part of the adapter adjacent to the CUT site from P7 site.
+motif_cut_rerest="TAA" # the inner part of the CUT site from P7 adapter site which stays with insert.
 ```
 
 - This script takes as input the paired sequences after the cut sites filtering step of the ddradseq_pre.bash script in the form of "Filtered.?.{barcode}.fq.gz" files.
