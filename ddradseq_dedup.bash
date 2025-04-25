@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Must be sourced: source ddradseq_dedup.bash [options]
 
 conda activate cutadapt
@@ -15,7 +14,7 @@ err=0 # numner of mismatches allowed adapter sequence for cutadapt
 barcodes="" # fasta file with barcodes
 dbr_sequence="NNNNNNNN" # DBR sequence in nucleotides
 dbr_pattern="[AGCT]{8}"
-motif_cut_adapter="GC"
+motif_cut_adapter="GC" # the outer part of the adapter adjacent to the CUT site and DBR site from P7 adapter
 motif_cut_rerest="TAA"
 
 # Help message
@@ -31,9 +30,9 @@ usage() {
   echo "  --err <value>            Number of mismatches allowed in adapter sequence for cutadapt (default: 0)"
   echo "  --barcodes <file>        Barcodes file (fasta file with barcodes) (default not set)"
   echo "  --dbr_sequence <value>	P7 DBR sequence (default 8 Ns: NNNNNNNN)"
-  echo "  --dbr_pattern <regex>      DBR regex pattern before motif (default: [AGCT]{8})"
-  echo "  --motif_cut_adapter <value>     Adapter-side fragment to keep (default: GC)"
-  echo "  --motif_cut_rerest <value>   Enzyme fragment to keep (default: TAA)"
+  echo "  --dbr_pattern <regex>      P7 DBR regex pattern before motif (default: [AGCT]{8})"
+  echo "  --motif_cut_adapter <value>  The outer part of the adapter adjacent to the CUT site and DBR site from P7 adapter (default: GC)"
+  echo "  --motif_cut_rerest <value>   The inner part of the CUT site from P7 adapter site which stays with insert (default: TAA)"
   echo "  --help                   Show this help message"
 }
 
