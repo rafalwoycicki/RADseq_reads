@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 # Must be sourced: source ddradseq_dedup.bash [options]
 
 conda activate cutadapt
@@ -11,7 +12,11 @@ p7len=140 #length of p7 read with MSE1 cut site and DBR.
 len=130 # length of the final reads
 thr=10 # nymber of processor therds to use for cutadapt
 err=0 # numner of mismatches allowed adapter sequence for cutadapt
-p7_5p_seq="P7read5primDBR_MSE1=^NNNNNNNNGC" # name and sequence of the nucleotides filtered by the final reads shortening cutadapt script (for details check the cutadapt manual)
+barcodes="" # fasta file with barcodes
+dbr_sequence="NNNNNNNN" # DBR sequence in nucleotides
+dbr_pattern="[AGCT]{8}"
+motif_cut_adapter="GC"
+motif_cut_rerest="TAA"
 
 # Help message
 usage() {
@@ -24,7 +29,11 @@ usage() {
   echo "  --len <value>            length of the final reads (default: 130)"
   echo "  --thr <value>            Number of threads (default: 10)"
   echo "  --err <value>            Number of mismatches allowed in adapter sequence for cutadapt (default: 0)"
-  echo "  --p7_5p_seq <value>      P7 5' outer cutsite sequence (default: P7read5primDBR_MSE1=^NNNNNNNNGC)"
+  echo "  --barcodes <file>        Barcodes file (fasta file with barcodes) (default not set)"
+  echo "  --dbr_sequence <value>	P7 DBR sequence (default 8 Ns: NNNNNNNN)"
+  echo "  --dbr_pattern <regex>      DBR regex pattern before motif (default: [AGCT]{8})"
+  echo "  --motif_cut_adapter <value>     Adapter-side fragment to keep (default: GC)"
+  echo "  --motif_cut_rerest <value>   Enzyme fragment to keep (default: TAA)"
   echo "  --help                   Show this help message"
 }
 
@@ -46,11 +55,20 @@ while [[ $# -gt 0 ]]; do
     --len) len="$2"; shift; shift ;;
     --thr) thr="$2"; shift; shift ;;
     --err) err="$2"; shift; shift ;;
-    --p7_5p_seq) p7_5p_seq="$2"; shift; shift ;;
+    --barcodes) barcodes="$2"; shift; shift ;;
+    --dbr_sequence) dbr_sequence="$2"; shift; shift ;;
+    --dbr_pattern) dbr_pattern="$2"; shift; shift;;
+    --motif_cut_adapter) motif_cut_adapter="$2"; shift; shift;;
+    --motif_cut_rerest) motif_cut_rerest="$2"; shift; shift;;
     --help) usage; return 0 ;;
     *) echo "Unknown option: $1"; usage; return 1 ;;
   esac
 done
+
+# mofitf_suffix
+motif_suffix="${motif_cut_adapter}${motif_cut_rerest}"
+# p7_5p_seq
+p7_5p_seq="^""${dbr_sequence}${motif_cut_adapter}"
 
 # Print all variables for verification
 echo "Variables set:"
@@ -61,9 +79,17 @@ echo "p7len=$p7len"
 echo "len=$len"
 echo "thr=$thr"
 echo "err=$err"
-echo "p7_5p_seq=$p7_5p_seq"
+echo "barcodes=$barcodes"
+echo "dbr_sequence=$dbr_sequence"
+echo "dbr_pattern=$dbr_pattern"
+echo "p7_5p_seq=$p7_5p_seq (auto-generated)"
+echo "motif_suffix=$motif_suffix (auto-generated)"
+echo "motif_cut_adapter=$motif_cut_adapter"
+echo "motif_cut_rerest=$motif_cut_rerest"
 
 # Start
+
+cat $barcodes | grep '>' | sed 's/>//' > barcodes.list
 
 cat barcodes.list | head -n "$iftest" | while read barcode; do # normal lociation of start of the loop
 
@@ -74,7 +100,7 @@ echo "# deduplicating paired reads"
 seqtk seq -A "$directory"Filtered.1."$barcode".fq.gz | awk '/^>/{if (seq) print header "\t" seq; split($1,h," "); header=substr(h[1],2); seq=""} !/^>/ {seq = seq $0} END {if (seq) print header "\t" seq}' > "$directory"Filtered.1."$barcode".table
 seqtk seq -A "$directory"Filtered.2."$barcode".fq.gz | awk '/^>/{if (seq) print header "\t" seq; split($1,h," "); header=substr(h[1],2); seq=""} !/^>/ {seq = seq $0} END {if (seq) print header "\t" seq}' > "$directory"Filtered.2."$barcode".table
 
-paste "$directory"Filtered.1."$barcode".table "$directory"Filtered.2."$barcode".table | awk -v p5len="$p5len" -v p7len="$p7len" '$1==$3 && length($2)>=p5len && length($4)>=p7len { $2=substr($2,1,p5len); $4=substr($4,1,p7len); if (match($4, /[AGCT]{8}GCTAA/)) { sub(/([AGCT]{8})GCTAA/, substr($4, RSTART, RLENGTH-5)"GC\tTAA", $4); } print $1"\t"$2"\t"$4; }' > "$directory"Filtered."$barcode".all.table
+paste "$directory"Filtered.1."$barcode".table "$directory"Filtered.2."$barcode".table | awk -v p5len="$p5len" -v p7len="$p7len" -v dbr="$dbr_pattern" -v suffix="$motif_suffix" -v adapter="$motif_cut_adapter" -v rerest="$motif_cut_rerest" 'BEGIN{OFS="\t"; pattern="(" dbr ")" suffix} $1==$3 && length($2)>=p5len && length($4)>=p7len { $2=substr($2,1,p5len); $4=substr($4,1,p7len); if (match($4, pattern)) { sub(pattern, substr($4, RSTART, RLENGTH - length(suffix)) adapter "\t" rerest, $4) } print $1, $2, $4 }' > "$directory"Filtered."$barcode".all.table
 
 cat "$directory"Filtered."$barcode".all.table | awk '{ print $1"\t"$3"_"$2 }' | sort -k2,2 > "$directory"Filtered."$barcode".p5sorted.table
 cat "$directory"Filtered."$barcode".all.table | awk '{ print $1"\t"$3"_"$4 }' | sort -k2,2 > "$directory"Filtered."$barcode".p7sorted.table
@@ -104,7 +130,7 @@ seqtk seq -A "$directory"Rescued.2."$barcode".fq.gz > "$directory"Rescued.2."$ba
 
 cat "$directory"Rescued.2."$barcode".fasta | tr '\n' '\t' | sed 's/\t>/\n/g' | sed 's/>//' | sed 's/\t$/\n/' | sed 's/ /\t/' | cut -f1,3 > "$directory"Rescued.2."$barcode".table
 
-cat "$directory"Rescued.2."$barcode".table | sed "s/\t/_fc_/" | sed "s/_fc_/\t_fc_\t/" | awk -v p7len="$p7len" 'length($3)>=p7len' | awk -v p7len="$p7len" -F"\t" -vOFS="\t" '{ $3=substr($3,1,p7len) };1' | sed "s/\t_fc_\t\([AGCT][AGCT][AGCT][AGCT][AGCT][AGCT][AGCT][AGCT]\)GCTAA/\t\1GC\tTAA/" > "$directory"Rescued.2."$barcode".all.table
+cat "$directory"Rescued.2."$barcode".table | awk -v p7len="$p7len" -v dbr="$dbr_pattern" -v suffix="$motif_suffix" -v adapter="$motif_cut_adapter" -v rerest="$motif_cut_rerest" 'BEGIN{OFS="\t"; regex="(" dbr ")" suffix} length($2) >= p7len { $2 = substr($2, 1, p7len); if (match($2, regex)) { dbr_part = substr($2, RSTART, RLENGTH - length(suffix)); $2 = rerest substr($2, RSTART + RLENGTH); print $1, dbr_part adapter, $2 } }' > "$directory"Rescued.2."$barcode".all.table
 
 cat "$directory"Rescued.2."$barcode".all.table | awk '{ print $1"\t"$2"_"$3 }' | sort -k2,2 > "$directory"Rescued.2."$barcode".p7sorted.table
 
@@ -123,9 +149,5 @@ done
 cat Start.counts Adapters.counts Barcodes.*.counts Filtered.*.counts Rescued.*.counts FilDedup.*.counts ResDedup.*.counts | sed 's/ /\t/g'  > Counts_dedupl.stat
 
 rm *.count
-
-rm -rf "$directory"*.table
-rm -rf "$directory"Filtered.*.p5p7dedupl.*.fq
-rm -rf "$directory"Rescued.2.*.p7dedupl.fq
 
 rm first.column
