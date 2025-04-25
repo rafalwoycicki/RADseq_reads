@@ -40,7 +40,7 @@ lenfil=140 # minimum length for filtering cut sites
 readsP5="1.fq.gz" # reads from P5 primer - forward
 readsP7="2.fq.gz" # reads from P7 primer - reverse
 barcodes="" # fasta file with barcodes
-directory="" # "" - if localy
+directory="" # output directory path (needs to end with "/"), set "" - if localy
 cutsites="cutsites.txt" # REQUIRED: File with cutsite sequences
 ```
 Remember:
@@ -113,17 +113,17 @@ Pipeline inspired by `clone_filter` script (https://catchenlab.life.illinois.edu
 There are several variables to be set before running the script in the command line:
 ```bash
 iftest="1" # 1 if test "-0" if not test
-directory="" # set the directory to save the files, set "" - if localy
+directory="" # output directory path (needs to end with "/"), set "" - if localy
 p5len=130 #length of p5 read with SBF1 cut site beginning with ^TGCA
-p7len=140 #length of p7 read with MSE1 cut site and DBR.
+p7len=140 #length of p7 read with MSE1 cut site and DBR
 len=130 # length of the final reads
 thr=10 # number of processor therds to use for cutadapt
 err=0 # numner of mismatches allowed adapter sequence for cutadapt
 barcodes="" # fasta file with barcodes
 dbr_sequence="NNNNNNNN" # DBR sequence in nucleotides
 dbr_pattern="[AGCT]{8}" # the DBR regex pattern
-motif_cut_adapter="GC" # the outer part of the adapter adjacent to the CUT site from P7 site.
-motif_cut_rerest="TAA" # the inner part of the CUT site from P7 adapter site which stays with insert.
+motif_cut_adapter="GC" # the outer part of the adapter adjacent to the CUT site and DBR site from P7 adapter
+motif_cut_rerest="TAA" # the inner part of the CUT site from P7 adapter site which stays with insert
 ```
 
 - This script takes as input the paired sequences after the cut sites filtering step of the ddradseq_pre.bash script in the form of "Filtered.?.{barcode}.fq.gz" files.
