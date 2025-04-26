@@ -3,7 +3,10 @@
 # ddRADseq_reads
 ## The set of pipelines for reads preprocessing and deduplicating from ddRADseq experiments, helping getting more reads to be used by main STACKS (https://catchenlab.life.illinois.edu/stacks/) pipeline steps.
 
-### The pipelines ddradseq_pre.bash and ddradseq_dedup.bash were written to help preprocessing reads from ddRADseq experiments using sequencing of double digested of genomic DNA inserted sorrounded by inline barcode on the P5 adaptor read and DBR region on the P7 adaptor read, the procedure modified from Schweyen et al.(DOI: 10.1086/BBLv227n2p146)
+### The pipelines ddradseq_pre.bash and ddradseq_dedup.bash were written to help preprocessing reads from ddRADseq experiments using sequencing of double digested of genomic DNA inserted sorrounded by inline barcode on the P5 adaptor read and DBR region on the P7 adaptor read, the procedure modified from Schweyen et al.(DOI: 10.1086/BBLv227n2p146), as shown on this hand made schema:
+
+  <img src="[https://github.com/user-attachments/assets/1a854d40-429f-45de-84f6-bd224324e1d4](https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/construct_schema.jpg)" width="500" />
+
 #### The new solution gave finally up to 10x more Stacks with Coverage 2-6 times higher than when preprocessing reads with the original proposed approach with STACKS's process_radtags and clone_filter. Comparison results in ComparisonFinal.ods (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/ComparisonsFinal.ods) file and in the Comparisons.md (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/Comparisons.md) file.
 
 The 3 separate datasets to test the software together will all supplementary infrormation needed (experiment setup, sequencing adaptors, RE, barcodes and DBR used) were kindly delivered by Prof. Maciej Pabijan (Institute of Zoology and Biomedical Research, Faculty of Biology, Jagiellonian University, Kraków, Poland).
