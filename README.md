@@ -59,7 +59,8 @@ A_p7_5p="P7read5prim=AGACGTGTGCTCTTCCGATCT" # read P7 5prim sequencing adapter s
 A_p7_3p="P7read3prim=AGATCGGAAGAGCGTCGTGTA" # read P7 3prim sequencing adapter sequence
 ```
 
-### Cutsites adapters in the <cutsites.txt> file. These need to be adjusted to your specific RAD-seq experiment. Here filtering the citsites was done using linked cutadapt adapters option, so ^C_p5_5p...C_p5_3p for P5 read and ^C_p7_5p...C_p7_3p for P7 read, where both 5p sequences were required and 3p sequences optional. When linked adapters are used both required sequences needs to be found for pair to be retained.
+### Cutsites adapters in the <cutsites.txt> file.
+These need to be adjusted to your specific RAD-seq experiment. Here filtering the citsites was done using linked cutadapt adapters option, so ^C_p5_5p...C_p5_3p for P5 read and ^C_p7_5p...C_p7_3p for P7 read, where both 5p sequences were required and 3p sequences optional. When linked adapters are used both required sequences needs to be found for pair to be retained.
 ```bash
   # read P5 5prim cut site for the SBF1 RE
 C_p5_5p=P5read5primSBF1=^TGCAGG
