@@ -7,7 +7,7 @@
 
 <img src="https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/construct_schema.jpg" width="500" />
 
-#### The new solution gave finally up to 10x more Stacks with Coverage 2-6 times higher than when preprocessing reads with the original proposed approach with STACKS's process_radtags and clone_filter. Comparison results in ComparisonFinal.ods (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/ComparisonsFinal.ods) file and in the Comparisons.md (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/Comparisons.md) file.
+#### The new solution gave finally up to 10x more Stacks with Coverage 2-6 times higher than when preprocessing reads with STACKS's process_radtags and clone_filter. Comparison results in ComparisonFinal.ods (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/ComparisonsFinal.ods) file and in the Comparisons.md (https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/Comparisons.md) file.
 
 The 3 separate datasets to test the software together will all supplementary infrormation needed (experiment setup, sequencing adaptors, RE, barcodes and DBR used) were kindly delivered by Prof. Maciej Pabijan (Institute of Zoology and Biomedical Research, Faculty of Biology, Jagiellonian University, Kraków, Poland).
 
