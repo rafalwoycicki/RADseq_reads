@@ -12,7 +12,6 @@ ustacks -f "$barcode".cl_fil_ninl.DIR/"$barcode".1.1.fq.gz -o ./"$barcode".cl_fi
 - In `process_radtags` we allowed 2 mismatches per sequencing adaptor and 2 mismatches in inline barcode.
 - In `ddradseq_pre` we allowe 2 errors per sequencing adaptor and 1 error in inline barcode.
 - Allowing 2 errors in barcode in `process_radtags was crucial in getting enough reads after` this step.
-#####
 
 | Legend | | |
 |---|---|---|
