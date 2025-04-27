@@ -23,6 +23,9 @@ ustacks -f "$barcode".cl_fil_ninl.DIR/"$barcode".1.1.fq.gz -o ./"$barcode".cl_fi
 | eb | allowed mismatches in barcode | |
 | ea | allowed mismatches in sequencing adapter | |
 
+- The `preprocessing & deduplication` tables show average `%` of reads per specific barcode.
+- The `ustacks result` tables show average number of stacks and average mean coverage per stack.
+
 ### Old dataset 130nt All
 
 | preprocessing & deduplication   |         | p5_cpa | p7_cpa | p5_rnp | p7_rnp | p5_dpa | p7_dpa |
