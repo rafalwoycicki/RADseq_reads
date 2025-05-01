@@ -1,0 +1,2 @@
+gzip -cd "$directory"Filtered.1."$barcode".fq.gz | awk 'NF && NR%4==1{sub(/^@/,">"); print} NF && NR%4==2{print}' | awk '/^>/{if (seq) print header "\t" seq; split($1,h," "); header=substr(h[1],2); seq=""} !/^>/ {seq = seq $0} END {if (seq) print header "\t" seq}' > "$directory"Filtered.1."$barcode".table
+
