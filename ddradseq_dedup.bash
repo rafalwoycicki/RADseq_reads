@@ -96,8 +96,8 @@ echo "$barcode"
 
 echo "# deduplicating paired reads"
 
-seqtk seq -A "$directory"Filtered.1."$barcode".fq.gz | awk '/^>/{if (seq) print header "\t" seq; split($1,h," "); header=substr(h[1],2); seq=""} !/^>/ {seq = seq $0} END {if (seq) print header "\t" seq}' > "$directory"Filtered.1."$barcode".table
-seqtk seq -A "$directory"Filtered.2."$barcode".fq.gz | awk '/^>/{if (seq) print header "\t" seq; split($1,h," "); header=substr(h[1],2); seq=""} !/^>/ {seq = seq $0} END {if (seq) print header "\t" seq}' > "$directory"Filtered.2."$barcode".table
+gzip -cd "$directory"Filtered.1."$barcode".fq.gz | awk 'NF && NR%4==1{sub(/^@/,">"); print} NF && NR%4==2{print}' | awk '/^>/{if (seq) print header "\t" seq; split($1,h," "); header=substr(h[1],2); seq=""} !/^>/ {seq = seq $0} END {if (seq) print header "\t" seq}' > "$directory"Filtered.1."$barcode".table
+gzip -cd "$directory"Filtered.2."$barcode".fq.gz | awk 'NF && NR%4==1{sub(/^@/,">"); print} NF && NR%4==2{print}' | awk '/^>/{if (seq) print header "\t" seq; split($1,h," "); header=substr(h[1],2); seq=""} !/^>/ {seq = seq $0} END {if (seq) print header "\t" seq}' > "$directory"Filtered.2."$barcode".table
 
 paste "$directory"Filtered.1."$barcode".table "$directory"Filtered.2."$barcode".table | awk -v p5len="$p5len" -v p7len="$p7len" -v dbr="$dbr_pattern" -v suffix="$motif_suffix" -v adapter="$motif_cut_adapter" -v rerest="$motif_cut_rerest" 'BEGIN{OFS="\t"; pattern="(" dbr ")" suffix} $1==$3 && length($2)>=p5len && length($4)>=p7len { $2=substr($2,1,p5len); $4=substr($4,1,p7len); if (match($4, pattern)) { sub(pattern, substr($4, RSTART, RLENGTH - length(suffix)) adapter "\t" rerest, $4) } print $1, $2, $4 }' > "$directory"Filtered."$barcode".all.table
 
