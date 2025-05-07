@@ -3,7 +3,7 @@
 # ddRADseq_reads
 ## The set of pipelines for reads preprocessing and deduplicating from ddRADseq experiments, helping getting more reads to be used by main STACKS (https://catchenlab.life.illinois.edu/stacks/) pipeline steps.
 
-### The pipelines `ddradseq_pre.bash` and `ddradseq_dedup.bash` were written to help preprocessing reads from ddRADseq experiments using sequencing of double digested genomic DNA insert sorrounded by inline barcode on the P5 forward adaptor read and DBR region on the P7 reverse adaptor read, the procedure modified from Schweyen et al. (`DOI: 10.1086/BBLv227n2p146`), as shown on this hand made schema (for other specific constructs one needs to modify the sequences of adapters):
+### The pipelines `ddradseq_pre.bash` and `ddradseq_dedup.bash` and `cleanup_radseq.sh` were written to help preprocessing reads from ddRADseq experiments using sequencing of double digested genomic DNA insert sorrounded by inline barcode on the P5 forward adaptor read and DBR region on the P7 reverse adaptor read, the procedure modified from Schweyen et al. (`DOI: 10.1086/BBLv227n2p146`), as shown on this hand made schema (for other specific constructs one needs to modify the sequences of adapters):
 
 <img src="https://github.com/rafalwoycicki/ddRADseq_reads/blob/main/construct_schema.jpg" width="500" />
 
