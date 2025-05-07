@@ -131,6 +131,7 @@ motif_cut_rerest="TAA" # the inner part of the CUT site from P7 adapter site whi
 ```
 
 - This script takes as input the paired sequences after the cut sites filtering step of the ddradseq_pre.bash script in the form of "Filtered.?.{barcode}.fq.gz" files.
+- Additionally the script uses Rescued.2.{barcode}.fq.gz files from the previous step to deduplicate rescued reverse reads (as these contain DBR sequence).
 
 ### Algorithm:
 1. First only the P5 reads of the $p5len and P7 reads of the $p7len are considered and both the reads are trimmed to these lengths respectively.
@@ -140,7 +141,9 @@ motif_cut_rerest="TAA" # the inner part of the CUT site from P7 adapter site whi
 3. As in practice the paired P7 reads of the P5 reads are not all unique, this step double check that the p7 reads are unique (by using DBR_P7reads combination) and paired with the unique p5 reads.
 4. Shortening all the reads to the final $len length as required by ustacks (https://catchenlab.life.illinois.edu/stacks/comp/ustacks.php) part of STACKS package. 
 
-- The output file schema of the files ready to be used by "ustacks" is: Short.Filtered.{barcode}.p5p7dedupl.?.fq
+- The same procedure is run for rescued reverse (P7) reads in Rescued.2.{barcode}.fq.gz files
+
+- The output file schema of the files ready to be used by "ustacks" are: Short.Filtered.{barcode}.p5p7dedupl.?.fq and Short.Rescued.2.{barcode}.fq.gz
 
 ### Statistics.
 The script outputs the statistics in the form of the number of the reads left for the analysis from each step in a file named "Counts_dedupl.stat"
