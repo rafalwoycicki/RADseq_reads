@@ -25,6 +25,8 @@ source <file name>
 ```
 to enable the specific environment. If not using conda, comment out the line with `conda activate environment`.
 
+Temporary files can be removed by running the script `cleanup_radseq.sh` (run with --help for instruction)
+
 ---
 # ddradseq_pre.bash
 pipeline inspired by process_radtags script (https://catchenlab.life.illinois.edu/stacks/comp/process_radtags.php) from the STACKS pipeline (https://catchenlab.life.illinois.edu/stacks/), outputing quality filtered, demultiplexed and cut site filtered paired and unpaired reads to be used by next STACKS steps.
