@@ -16,8 +16,8 @@ The 3 separate datasets to test the software together will all supplementary inf
 
 Pipeline uses:
 - `cutadapt 5.0` (https://doi.org/10.14806/ej.17.1.200)
-- `seqtk` (https://github.com/lh3/seqtk)
-- `awk` scripting language.
+- `seqtk` (https://github.com/lh3/seqtk) - for ddradseq_dedup.bash
+- `awk` scripting language
 
 When using a conda environment, run the script using:
 ```bash
