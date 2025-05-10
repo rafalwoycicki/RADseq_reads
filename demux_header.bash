@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Usage:
-# ./demultiplex_paired_final.sh R1.fastq.gz R2.fastq.gz barcode_mapping.txt first|second [swap]
+# ./demux_header.bash R1.fastq.gz R2.fastq.gz barcode_mapping.txt first|second [swap]
 
 R1=$1
 R2=$2
